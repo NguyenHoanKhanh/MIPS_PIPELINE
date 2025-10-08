@@ -1,0 +1,232 @@
+$date
+	Mon Oct 06 23:23:36 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_decoder $end
+$var wire 5 ! d_o_addr_rd [4:0] $end
+$var wire 5 " d_o_addr_rs [4:0] $end
+$var wire 5 # d_o_addr_rt [4:0] $end
+$var wire 1 $ d_o_alu_src $end
+$var wire 1 % d_o_branch $end
+$var wire 1 & d_o_ce $end
+$var wire 6 ' d_o_funct [5:0] $end
+$var wire 16 ( d_o_imm [15:0] $end
+$var wire 1 ) d_o_memread $end
+$var wire 1 * d_o_memtoreg $end
+$var wire 1 + d_o_memwrite $end
+$var wire 6 , d_o_opcode [5:0] $end
+$var wire 1 - d_o_reg_dst $end
+$var wire 1 . d_o_reg_wr $end
+$var reg 1 / d_clk $end
+$var reg 1 0 d_i_ce $end
+$var reg 32 1 d_i_data_rd [31:0] $end
+$var reg 32 2 d_i_instr [31:0] $end
+$var reg 1 3 d_rst $end
+$scope module dut $end
+$var wire 1 4 d_clk $end
+$var wire 1 5 d_i_ce $end
+$var wire 6 6 d_i_funct [5:0] $end
+$var wire 32 7 d_i_instr [31:0] $end
+$var wire 6 8 d_i_opcode [5:0] $end
+$var wire 1 9 d_rst $end
+$var wire 1 : funct_add $end
+$var wire 1 ; funct_and $end
+$var wire 1 < funct_or $end
+$var wire 1 = funct_sub $end
+$var wire 1 > funct_xor $end
+$var wire 1 ? op_addi $end
+$var wire 1 @ op_addiu $end
+$var wire 1 A op_andi $end
+$var wire 1 B op_branch $end
+$var wire 1 C op_load $end
+$var wire 1 D op_ori $end
+$var wire 1 E op_rtype $end
+$var wire 1 F op_slti $end
+$var wire 1 G op_sltiu $end
+$var wire 1 H op_store $end
+$var wire 1 I op_xori $end
+$var reg 5 J d_o_addr_rd [4:0] $end
+$var reg 5 K d_o_addr_rs [4:0] $end
+$var reg 5 L d_o_addr_rt [4:0] $end
+$var reg 1 M d_o_alu_src $end
+$var reg 1 N d_o_branch $end
+$var reg 1 O d_o_ce $end
+$var reg 6 P d_o_funct [5:0] $end
+$var reg 16 Q d_o_imm [15:0] $end
+$var reg 1 R d_o_memread $end
+$var reg 1 S d_o_memtoreg $end
+$var reg 1 T d_o_memwrite $end
+$var reg 6 U d_o_opcode [5:0] $end
+$var reg 1 V d_o_reg_dst $end
+$var reg 1 W d_o_reg_wr $end
+$var reg 32 X temp_instr [31:0] $end
+$upscope $end
+$scope task reset $end
+$var integer 32 Y cycles [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b10 Y
+bx X
+0W
+0V
+b0 U
+0T
+0S
+0R
+b0 Q
+b0 P
+0O
+0N
+0M
+b0 L
+b0 K
+b0 J
+xI
+xH
+xG
+xF
+xE
+xD
+xC
+xB
+xA
+x@
+x?
+x>
+x=
+x<
+x;
+x:
+09
+bx 8
+b0 7
+bx 6
+05
+04
+03
+b0 2
+b0 1
+00
+0/
+0.
+0-
+b0 ,
+0+
+0*
+0)
+b0 (
+b0 '
+0&
+0%
+0$
+b0 #
+b0 "
+b0 !
+$end
+#5000
+1/
+14
+#10000
+0/
+04
+#15000
+13
+19
+1/
+14
+#20000
+0/
+04
+#25000
+1E
+0C
+0H
+0B
+0?
+0@
+0F
+0G
+0A
+0D
+0I
+b0 8
+0:
+0=
+0;
+0<
+0>
+b0 6
+b0 X
+10
+15
+1/
+14
+#30000
+0/
+04
+#35000
+0E
+1B
+b11 8
+b10000 6
+1W
+1.
+1V
+1-
+1O
+1&
+b1101011010110000000000010000 X
+b1101011010110000000000010000 2
+b1101011010110000000000010000 7
+1/
+14
+#40000
+0/
+04
+#45000
+0W
+0.
+1N
+1%
+b10000 Q
+b10000 (
+b11 U
+b11 ,
+b1011 L
+b1011 #
+b1011 K
+b1011 "
+1/
+14
+#50000
+0/
+04
+#55000
+1/
+14
+#60000
+0/
+04
+#65000
+1/
+14
+#70000
+0/
+04
+#75000
+1/
+14
+#80000
+0/
+04
+#85000
+1/
+14
