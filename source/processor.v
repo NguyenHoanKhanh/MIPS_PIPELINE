@@ -20,15 +20,7 @@ module processor #(
     output [DWIDTH - 1 : 0] p_wb_data;
 
     wire [`OPCODE_WIDTH - 1 : 0] d_c_o_opcode;
-    datapath #(
-        .DWIDTH(DWIDTH),
-        .AWIDTH(AWIDTH),
-        .IWIDTH(IWIDTH),
-        .PC_WIDTH(PC_WIDTH),
-        .DEPTH(DEPTH),
-        .AWIDTH_MEM(AWIDTH_MEM),
-        .IMM_WIDTH(IMM_WIDTH)
-    ) d (
+    datapath d (
         .d_clk(p_clk), 
         .d_rst(p_rst), 
         .d_i_ce(p_i_ce), 

@@ -85,8 +85,6 @@ module verify #(
         .IMM_WIDTH(IMM_WIDTH),
         .PC_WIDTH(PC_WIDTH)
     ) e_s (
-        .es_clk(v_clk), 
-        .es_rst(v_rst), 
         .es_i_ce(d_e_o_ce), 
         .es_i_branch(d_e_o_branch), 
         .es_i_pc(f_e_o_pc), 

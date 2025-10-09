@@ -26,8 +26,7 @@ module tb;
         .f_i_pc(f_i_pc), 
         .f_o_instr(f_o_instr), 
         .f_o_pc(f_o_pc),
-        .f_o_ce(f_o_ce),
-        .f_o_valid(f_o_valid)
+        .f_o_ce(f_o_ce)
     );
 
     initial begin

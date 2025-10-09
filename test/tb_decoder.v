@@ -7,7 +7,6 @@ module tb_decoder;
     parameter DWIDTH = 32;
     parameter IMM_WIDTH = 16;
 
-    reg  d_clk, d_rst;
     reg  d_i_ce;
     reg  [IWIDTH - 1 : 0] d_i_instr;
     reg  [DWIDTH - 1 : 0] d_i_data_rd;
@@ -31,8 +30,6 @@ module tb_decoder;
         .DWIDTH(DWIDTH),
         .IWIDTH(IWIDTH)
     ) dut (
-        .d_clk(d_clk), 
-        .d_rst(d_rst), 
         .d_i_ce(d_i_ce), 
         .d_i_instr(d_i_instr), 
         .d_o_opcode(d_o_opcode), 
@@ -51,32 +48,17 @@ module tb_decoder;
         .d_o_memtoreg(d_o_memtoreg)
     );
 
-    // Clock
-    initial d_clk = 0;
-    always #5 d_clk = ~d_clk;
-
     initial begin
         $dumpfile("./waveform/decoder.vcd");
         $dumpvars(0, tb_decoder);
     end
-
-    // Reset task
-    task reset(input integer cycles);
-        begin
-            d_rst = 1'b0;
-            repeat(cycles) @(posedge d_clk);
-            d_rst = 1'b1;
-            @(posedge d_clk);
-        end
-    endtask
 
     // Main test sequence
     initial begin
         d_i_ce      = 0;
         d_i_instr   = 32'h00000000;
         d_i_data_rd = 32'h00000000;
-
-        reset(2);
+        #10;
         d_i_ce = 1;
 
         // 5 instructions (ví dụ)
@@ -86,8 +68,7 @@ module tb_decoder;
         // @(posedge d_clk) d_i_instr = 32'h016C5025; // OR   $10,$11,$12
         // @(posedge d_clk) d_i_instr = 32'h01CF6826; // XOR  $13,$14,$15
         // @(posedge d_clk) d_i_instr = 32'h10410064; //ADDI $1, $2, 100
-        @(posedge d_clk) d_i_instr = 32'h0D6B0010; // BEQ $11, $11, 16
-        repeat(5) @(posedge d_clk);
+        #10 d_i_instr = 32'h0D6B0010; // BEQ $11, $11, 16
         $finish;
     end
 

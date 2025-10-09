@@ -1,5 +1,5 @@
 $date
-	Mon Oct 06 15:25:21 2025
+	Wed Oct 08 13:20:43 2025
 $end
 $version
 	Icarus Verilog
@@ -15,149 +15,174 @@ $var wire 32 $ ds_o_data_rs [31:0] $end
 $var wire 32 % ds_o_data_rt [31:0] $end
 $var wire 6 & ds_o_funct [5:0] $end
 $var wire 16 ' ds_o_imm [15:0] $end
-$var wire 6 ( ds_o_opcode [5:0] $end
-$var reg 1 ) ds_clk $end
-$var reg 1 * ds_i_ce $end
-$var reg 32 + ds_i_data_rd [31:0] $end
-$var reg 32 , ds_i_instr [31:0] $end
-$var reg 1 - ds_rst $end
+$var wire 1 ( ds_o_memread $end
+$var wire 1 ) ds_o_memtoreg $end
+$var wire 1 * ds_o_memwrite $end
+$var wire 6 + ds_o_opcode [5:0] $end
+$var reg 1 , ds_clk $end
+$var reg 1 - ds_i_ce $end
+$var reg 32 . ds_i_data_rd [31:0] $end
+$var reg 32 / ds_i_instr [31:0] $end
+$var reg 1 0 ds_rst $end
 $scope module ds $end
-$var wire 5 . d_o_addr_rs [4:0] $end
-$var wire 5 / d_o_addr_rt [4:0] $end
-$var wire 1 0 d_r_o_reg_dst $end
-$var wire 1 1 d_r_o_reg_wr $end
-$var wire 1 2 ds_clk $end
-$var wire 5 3 ds_i_addr_rd [4:0] $end
-$var wire 1 4 ds_i_ce $end
-$var wire 32 5 ds_i_data_rd [31:0] $end
-$var wire 32 6 ds_i_instr [31:0] $end
+$var wire 5 1 d_o_addr_rs [4:0] $end
+$var wire 5 2 d_o_addr_rt [4:0] $end
+$var wire 1 3 d_r_o_reg_dst $end
+$var wire 1 4 d_r_o_reg_wr $end
+$var wire 1 5 ds_clk $end
+$var wire 5 6 ds_i_addr_rd [4:0] $end
+$var wire 1 7 ds_i_ce $end
+$var wire 32 8 ds_i_data_rd [31:0] $end
+$var wire 32 9 ds_i_instr [31:0] $end
 $var wire 1 ! ds_o_alu_src $end
 $var wire 1 " ds_o_branch $end
 $var wire 1 # ds_o_ce $end
-$var wire 32 7 ds_o_data_rs [31:0] $end
-$var wire 32 8 ds_o_data_rt [31:0] $end
-$var wire 6 9 ds_o_funct [5:0] $end
-$var wire 16 : ds_o_imm [15:0] $end
-$var wire 6 ; ds_o_opcode [5:0] $end
-$var wire 1 < ds_rst $end
-$var wire 5 = write_register [4:0] $end
+$var wire 32 : ds_o_data_rs [31:0] $end
+$var wire 32 ; ds_o_data_rt [31:0] $end
+$var wire 6 < ds_o_funct [5:0] $end
+$var wire 16 = ds_o_imm [15:0] $end
+$var wire 1 ( ds_o_memread $end
+$var wire 1 ) ds_o_memtoreg $end
+$var wire 1 * ds_o_memwrite $end
+$var wire 6 > ds_o_opcode [5:0] $end
+$var wire 1 ? ds_rst $end
+$var wire 5 @ write_register [4:0] $end
 $scope module d $end
-$var wire 1 2 d_clk $end
-$var wire 1 4 d_i_ce $end
-$var wire 6 > d_i_funct [5:0] $end
-$var wire 32 ? d_i_instr [31:0] $end
-$var wire 6 @ d_i_opcode [5:0] $end
-$var wire 1 < d_rst $end
-$var wire 1 A funct_add $end
-$var wire 1 B funct_and $end
-$var wire 1 C funct_or $end
-$var wire 1 D funct_sub $end
-$var wire 1 E funct_xor $end
-$var wire 1 F op_addi $end
-$var wire 1 G op_addiu $end
-$var wire 1 H op_andi $end
-$var wire 1 I op_branch $end
-$var wire 1 J op_load $end
-$var wire 1 K op_ori $end
-$var wire 1 L op_rtype $end
-$var wire 1 M op_slti $end
-$var wire 1 N op_sltiu $end
-$var wire 1 O op_store $end
-$var wire 1 P op_xori $end
-$var reg 5 Q d_o_addr_rd [4:0] $end
-$var reg 5 R d_o_addr_rs [4:0] $end
-$var reg 5 S d_o_addr_rt [4:0] $end
-$var reg 1 T d_o_alu_src $end
-$var reg 1 U d_o_branch $end
-$var reg 1 V d_o_ce $end
-$var reg 6 W d_o_funct [5:0] $end
-$var reg 16 X d_o_imm [15:0] $end
-$var reg 6 Y d_o_opcode [5:0] $end
-$var reg 1 Z d_o_reg_dst $end
-$var reg 1 [ d_o_reg_wr $end
-$var reg 32 \ temp_instr [31:0] $end
+$var wire 1 7 d_i_ce $end
+$var wire 6 A d_i_funct [5:0] $end
+$var wire 32 B d_i_instr [31:0] $end
+$var wire 6 C d_i_opcode [5:0] $end
+$var wire 6 D funct [5:0] $end
+$var wire 1 E funct_add $end
+$var wire 1 F funct_and $end
+$var wire 1 G funct_or $end
+$var wire 1 H funct_sub $end
+$var wire 1 I funct_xor $end
+$var wire 16 J imm [15:0] $end
+$var wire 1 K op_addi $end
+$var wire 1 L op_addiu $end
+$var wire 1 M op_andi $end
+$var wire 1 N op_beq $end
+$var wire 1 O op_bne $end
+$var wire 1 P op_load $end
+$var wire 1 Q op_ori $end
+$var wire 1 R op_rtype $end
+$var wire 1 S op_slti $end
+$var wire 1 T op_sltiu $end
+$var wire 1 U op_store $end
+$var wire 1 V op_xori $end
+$var wire 6 W opcode [5:0] $end
+$var wire 5 X rd [4:0] $end
+$var wire 5 Y rs [4:0] $end
+$var wire 5 Z rt [4:0] $end
+$var reg 5 [ d_o_addr_rd [4:0] $end
+$var reg 5 \ d_o_addr_rs [4:0] $end
+$var reg 5 ] d_o_addr_rt [4:0] $end
+$var reg 1 ^ d_o_alu_src $end
+$var reg 1 _ d_o_branch $end
+$var reg 1 ` d_o_ce $end
+$var reg 6 a d_o_funct [5:0] $end
+$var reg 16 b d_o_imm [15:0] $end
+$var reg 1 c d_o_memread $end
+$var reg 1 d d_o_memtoreg $end
+$var reg 1 e d_o_memwrite $end
+$var reg 6 f d_o_opcode [5:0] $end
+$var reg 1 g d_o_reg_dst $end
+$var reg 1 h d_o_reg_wr $end
 $upscope $end
 $scope module r $end
-$var wire 5 ] r_addr_in [4:0] $end
-$var wire 5 ^ r_addr_out1 [4:0] $end
-$var wire 5 _ r_addr_out2 [4:0] $end
-$var wire 1 2 r_clk $end
-$var wire 32 ` r_data_in [31:0] $end
-$var wire 32 a r_data_out1 [31:0] $end
-$var wire 32 b r_data_out2 [31:0] $end
-$var wire 1 < r_rst $end
-$var wire 1 1 r_wr_en $end
-$var integer 32 c i [31:0] $end
+$var wire 5 i r_addr_in [4:0] $end
+$var wire 5 j r_addr_out1 [4:0] $end
+$var wire 5 k r_addr_out2 [4:0] $end
+$var wire 1 5 r_clk $end
+$var wire 32 l r_data_in [31:0] $end
+$var wire 32 m r_data_out1 [31:0] $end
+$var wire 32 n r_data_out2 [31:0] $end
+$var wire 1 ? r_rst $end
+$var wire 1 4 r_wr_en $end
+$var integer 32 o i [31:0] $end
 $upscope $end
 $upscope $end
 $scope task reset $end
-$var integer 32 d counter [31:0] $end
+$var integer 32 p counter [31:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b10 d
-b100000 c
+b10 p
+b100000 o
+b0 n
+b0 m
+bx l
+b0 k
+b0 j
+b0 i
+0h
+0g
+b0 f
+0e
+0d
+0c
 b0 b
 b0 a
-bx `
-b0 _
-b0 ^
+0`
+0_
+0^
 b0 ]
-bx \
-0[
-0Z
-b0 Y
-b0 X
-b0 W
-0V
-0U
-0T
-b0 S
-b0 R
-b0 Q
+b0 \
+b0 [
+bx Z
+bx Y
+bx X
+bx W
+xV
+xU
+xT
+xS
+xR
+xQ
 xP
 xO
 xN
 xM
 xL
 xK
-xJ
+bx J
 xI
 xH
 xG
 xF
 xE
-xD
-xC
-xB
-xA
-bx @
-bx ?
-bx >
+bx D
+bx C
+bx B
+bx A
+b0 @
+0?
+b0 >
 b0 =
-0<
+b0 <
 b0 ;
 b0 :
-b0 9
-b0 8
-b0 7
-bx 6
-bx 5
+bx 9
+bx 8
+07
+b0 6
+05
 04
-b0 3
-02
-01
+03
+b0 2
+b0 1
 00
-b0 /
-b0 .
+bx /
+bx .
 0-
-bx ,
-bx +
+0,
+b0 +
 0*
 0)
-b0 (
+0(
 b0 '
 b0 &
 b0 %
@@ -167,123 +192,144 @@ b0 $
 0!
 $end
 #5
-b100000 c
-1)
-12
+b100000 o
+1,
+15
 #10
-0)
-02
+0,
+05
 #15
-1*
-14
 1-
-1<
-1)
-12
+17
+10
+1?
+1,
+15
 #20
-0)
-02
+0,
+05
 #25
-1L
-0J
+b1 @
+b1 i
+1h
+14
+1g
+13
+1`
+1#
+b100000 a
+b100000 &
+b100000 <
+b1 [
+b1 6
+b11 ]
+b11 %
+b11 ;
+b11 n
+b11 2
+b11 k
+b10 \
+b10 $
+b10 :
+b10 m
+b10 1
+b10 j
+1R
+0P
+0U
+0N
 0O
-0I
+0K
+0L
+0S
+0T
+0M
+0Q
+0V
+b0 C
+1E
+0H
 0F
 0G
-0M
-0N
-0H
-0K
-0P
-b0 @
-1A
-0D
-0B
-0C
-0E
-b100000 >
-b10000110000100000100000 \
-b10000110000100000100000 ,
-b10000110000100000100000 6
-b10000110000100000100000 ?
-1)
-12
-#30
-0)
-02
-#35
-b1 =
-b1 ]
-0L
-1J
-b1 @
-0A
-b1010 >
-1[
-11
-1Z
-10
-1V
-1#
-b100000 W
-b100000 &
-b100000 9
-b1 Q
-b1 3
-b11 S
-b11 %
-b11 8
-b11 b
-b11 /
-b11 _
-b10 R
-b10 $
-b10 7
-b10 a
-b10 .
-b10 ^
-b100001001000000000000001010 \
-b100001001000000000000001010 ,
-b100001001000000000000001010 6
-b100001001000000000000001010 ?
-1)
-12
-#40
-0)
-02
-#45
-b0 =
-b0 ]
-1T
-1!
-b1010 X
-b1010 '
-b1010 :
+0I
+b100000 A
+b10 Y
+b11 Z
+b1 X
 b0 W
+b100000 D
+b100000100000 J
+b10000110000100000100000 /
+b10000110000100000100000 9
+b10000110000100000100000 B
+1,
+15
+#30
+0,
+05
+#35
+b0 @
+b0 i
+1d
+1)
+1c
+1(
+1^
+1!
+b1010 b
+b1010 '
+b1010 =
+b1 f
+b1 +
+b1 >
+1h
+14
+1g
+13
+1`
+1#
+b0 a
 b0 &
-b0 9
-b1 Y
-b1 (
-b1 ;
-b0 Q
-b0 3
-b100 S
+b0 <
+b0 [
+b0 6
+b100 ]
 b100 %
-b100 8
-b100 b
-b100 /
-b100 _
-b1 R
+b100 ;
+b100 n
+b100 2
+b100 k
+b1 \
 bx $
-bx 7
-bx a
-b1 .
-b1 ^
-1)
-12
+bx :
+bx m
+b1 1
+b1 j
+0R
+1P
+b1 C
+0E
+b1010 A
+b1 Y
+b100 Z
+b0 X
+b1 W
+b1010 D
+b1010 J
+b100001001000000000000001010 /
+b100001001000000000000001010 9
+b100001001000000000000001010 B
+1,
+15
+#40
+0,
+05
+#45
+1,
+15
 #50
-0)
-02
+0,
+05
 #55
-1)
-12
+1,
+15

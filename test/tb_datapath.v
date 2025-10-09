@@ -14,14 +14,7 @@ module tb;
     wire [PC_WIDTH - 1 : 0] fs_ds_o_pc;
     wire [DWIDTH - 1 : 0] write_back_data;
 
-    datapath #(
-        .DWIDTH(DWIDTH),
-        .AWIDTH(AWIDTH),
-        .IWIDTH(IWIDTH),
-        .PC_WIDTH(PC_WIDTH),
-        .DEPTH(DEPTH),
-        .AWIDTH_MEM(AWIDTH_MEM)
-    ) d (
+    datapath d (
         .d_clk(d_clk), 
         .d_rst(d_rst), 
         .d_i_ce(d_i_ce), 
