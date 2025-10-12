@@ -1,33 +1,23 @@
 `include "./source/execute_stage.v"
 
 module tb;
-    parameter DWIDTH = 32;
-    parameter IMM_WIDTH = 16;
-    parameter PC_WIDTH = 32;
-    reg es_clk, es_rst;
     reg es_i_ce;
     reg es_i_alu_src;
     reg es_i_branch;
-    reg [PC_WIDTH - 1 : 0] es_i_pc;
-    reg [IMM_WIDTH - 1 : 0] es_i_imm;
+    reg [`PC_WIDTH - 1 : 0] es_i_pc;
+    reg [`IMM_WIDTH - 1 : 0] es_i_imm;
     reg [`OPCODE_WIDTH - 1 : 0] es_i_alu_op;
     reg [`FUNCT_WIDTH - 1 : 0] es_i_alu_funct;
-    reg [DWIDTH - 1 : 0] es_i_data_rs, es_i_data_rt;
-    wire [DWIDTH - 1 : 0] es_o_alu_value;
-    wire [PC_WIDTH - 1 : 0] es_o_alu_pc;
+    reg [`DWIDTH - 1 : 0] es_i_data_rs, es_i_data_rt;
+    wire [`DWIDTH - 1 : 0] es_o_alu_value;
+    wire [`PC_WIDTH - 1 : 0] es_o_alu_pc;
     wire [`OPCODE_WIDTH - 1 : 0] es_o_opcode;
     wire [`FUNCT_WIDTH - 1 : 0] es_o_funct;
     wire es_o_zero;
     wire es_o_ce;
     wire es_o_change_pc;
 
-    execute #(
-        .DWIDTH(DWIDTH),
-        .IMM_WIDTH(IMM_WIDTH),
-        .PC_WIDTH(PC_WIDTH)
-    ) es (
-        .es_clk(es_clk),
-        .es_rst(es_rst),
+    execute es (
         .es_i_ce(es_i_ce),
         .es_i_alu_src(es_i_alu_src),    
         .es_i_branch(es_i_branch),
@@ -46,37 +36,24 @@ module tb;
         .es_o_change_pc(es_o_change_pc)
     );
 
-    initial begin
-        es_clk = 1'b0;
-        es_rst = 1'b1;               
+    initial begin             
         es_i_ce = 1'b0;
         es_i_alu_src = 1'b0;        
         es_i_branch = 1'b0;
-        es_i_pc = {PC_WIDTH{1'b0}};
-        es_i_imm = {IMM_WIDTH{1'b0}};
-        es_i_data_rs = {DWIDTH{1'b0}};
-        es_i_data_rt = {DWIDTH{1'b0}};
+        es_i_pc = {`PC_WIDTH{1'b0}};
+        es_i_imm = {`IMM_WIDTH{1'b0}};
+        es_i_data_rs = {`DWIDTH{1'b0}};
+        es_i_data_rt = {`DWIDTH{1'b0}};
         es_i_alu_funct = {`FUNCT_WIDTH{1'b0}};
         es_i_alu_op = {`OPCODE_WIDTH{1'b0}};
     end
-    always #5 es_clk = ~es_clk;
 
     initial begin
         $dumpfile("./waveform/execute.vcd");
         $dumpvars(0, tb);
     end
 
-    task reset (input integer counter);
-        begin
-            es_rst = 1'b0;
-            repeat(counter) @(posedge es_clk);
-            es_rst = 1'b1;
-        end
-    endtask
-
     initial begin
-        reset(2);
-        @(posedge es_clk);
         es_i_ce = 1'b1;
 
         // OR
@@ -88,7 +65,7 @@ module tb;
         es_i_data_rt = 4;
         es_i_alu_funct = `OR;
         es_i_alu_op = `RTYPE;
-        @(posedge es_clk);
+        #10;
 
         // // SUB
         // es_i_alu_src = 1'b0;        

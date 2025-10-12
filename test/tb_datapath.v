@@ -1,24 +1,15 @@
 `include "./source/datapath.v"
 
 module tb;
-    parameter DWIDTH = 32;
-    parameter IWIDTH = 32;
-    parameter AWIDTH = 5;      
-    parameter PC_WIDTH = 32;
-    parameter DEPTH = 6;
-    parameter AWIDTH_MEM = 32;
-
     reg d_clk, d_rst;
     reg d_i_ce;
-    wire [`OPCODE_WIDTH - 1 : 0] ds_es_o_opcode;
-    wire [PC_WIDTH - 1 : 0] fs_ds_o_pc;
-    wire [DWIDTH - 1 : 0] write_back_data;
+    wire [`PC_WIDTH - 1 : 0] fs_ds_o_pc;
+    wire [`DWIDTH - 1 : 0] write_back_data;
 
     datapath d (
         .d_clk(d_clk), 
         .d_rst(d_rst), 
         .d_i_ce(d_i_ce), 
-        .ds_es_o_opcode(ds_es_o_opcode),
         .write_back_data(write_back_data),
         .fs_ds_o_pc(fs_ds_o_pc)
     );
@@ -45,14 +36,12 @@ module tb;
         reset(2);
         @(posedge d_clk);
         d_i_ce = 1'b1;
-        @(posedge d_clk);
         repeat(24) @(posedge d_clk);
         $finish;
     end
 
     initial begin  
-        $monitor("%0t: PC=%0d, instr=%h, rs_data=%h, rt_data=%h, alu_out=%h, ds_es_o_opcode = %b", 
-            $time, fs_ds_o_pc, d.fs_ds_o_instr, d.ds_es_o_data_rs, 
-            d.ds_es_o_data_rt, write_back_data, ds_es_o_opcode);
+        $monitor("%0t: PC=%0d, instr=%h, alu_out=%h", 
+            $time, fs_ds_o_pc, d.im_ds_o_instr, write_back_data);
     end
 endmodule

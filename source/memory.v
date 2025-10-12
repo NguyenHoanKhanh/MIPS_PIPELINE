@@ -14,10 +14,10 @@ module memory (
     integer i;
     reg [`DWIDTH - 1 : 0] data_mem [0 : `AWIDTH_MEM - 1];
 
-    always @(posedge m_clk, negedge m_rst) begin
+    always @(negedge m_clk, negedge m_rst) begin
         if (!m_rst) begin
             for (i = 0; i < `AWIDTH_MEM; i = i + 1) begin
-                data_mem[i] <= {`DWIDTH{1'b0}};   
+                data_mem[i] <= i;   
             end
         end
         else begin

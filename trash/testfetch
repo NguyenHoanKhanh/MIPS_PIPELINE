@@ -4,285 +4,213 @@
 :vpi_module "system";
 :vpi_module "v2005_math";
 :vpi_module "va_math";
-S_013E8DF8 .scope module, "tb" "tb" 2 2;
+S_012C7880 .scope module, "tb" "tb" 2 2;
  .timescale 0 0;
-P_013ED364 .param/l "DEPTH" 2 5, +C4<0110>;
-P_013ED378 .param/l "IWIDTH" 2 3, +C4<0100000>;
-P_013ED38C .param/l "PC_WIDTH" 2 4, +C4<0100000>;
-v00A21618_0 .var "f_clk", 0 0;
-v00A217D0_0 .var "f_i_ce", 0 0;
-v00A21930_0 .var "f_i_change_pc", 0 0;
-v00A21988_0 .var "f_i_pc", 31 0;
-v00A21670_0 .net "f_o_ce", 0 0, v00A21568_0; 1 drivers
-v00A21408_0 .net "f_o_instr", 31 0, v00A215C0_0; 1 drivers
-v00A21A90_0 .net "f_o_pc", 31 0, v00A21778_0; 1 drivers
-v00A21720_0 .net "f_o_valid", 0 0, v00A21880_0; 1 drivers
-v00A219E0_0 .var "f_rst", 0 0;
-v00A218D8_0 .var/i "i", 31 0;
-S_013E8E80 .scope task, "display" "display" 2 54, 2 54, S_013E8DF8;
+v01141750_0 .var "f_i_ce", 0 0;
+v01141908_0 .net "f_o_ce", 0 0, v012C88F0_0; 1 drivers
+v01141C20_0 .net "f_o_instr", 31 0, v012C8948_0; 1 drivers
+v011417A8_0 .var/i "i", 31 0;
+S_01169300 .scope task, "display" "display" 2 24, 2 24, S_012C7880;
  .timescale 0 0;
-v00A21510_0 .var/i "counter", 31 0;
+v011416F8_0 .var/i "counter", 31 0;
 TD_tb.display ;
-    %set/v v00A217D0_0, 1, 1;
-    %set/v v00A218D8_0, 0, 32;
+    %set/v v01141750_0, 1, 1;
+    %set/v v011417A8_0, 0, 32;
 T_0.0 ;
-    %load/v 8, v00A218D8_0, 32;
-    %load/v 40, v00A21510_0, 32;
+    %load/v 8, v011417A8_0, 32;
+    %load/v 40, v011416F8_0, 32;
     %cmp/s 8, 40, 32;
     %jmp/0xz T_0.1, 5;
-    %wait E_00A151B0;
-    %vpi_call 2 59 "$display", $time, " ", "instr = %h, pc = %d, last = %b, syn = %b, ack = %b, ce = %b, valid = %b", v00A21408_0, v00A21A90_0, v013EE5A0_0, v00A21828_0, v013EE440_0, v00A21670_0, v00A21720_0;
+    %delay 10, 0;
+    %vpi_call 2 29 "$display", $time, " ", "instr = %h, last = %b, syn = %b, ack = %b, ce = %b", v01141C20_0, v012C8898_0, v012C89A0_0, v01143C48_0, v01141908_0;
     %ix/load 0, 1, 0;
-    %load/vp0/s 8, v00A218D8_0, 32;
-    %set/v v00A218D8_0, 8, 32;
+    %load/vp0/s 8, v011417A8_0, 32;
+    %set/v v011417A8_0, 8, 32;
     %jmp T_0.0;
 T_0.1 ;
-    %set/v v00A217D0_0, 0, 1;
+    %set/v v01141750_0, 0, 1;
     %end;
-S_013E9018 .scope task, "reset" "reset" 2 46, 2 46, S_013E8DF8;
+S_012C7990 .scope module, "f" "instruction_fetch" 2 9, 3 5, S_012C7880;
  .timescale 0 0;
-v00A21B40_0 .var/i "counter", 31 0;
-E_00A151B0 .event posedge, v013E7320_0;
-TD_tb.reset ;
-    %set/v v00A219E0_0, 0, 1;
-    %load/v 8, v00A21B40_0, 32;
-T_1.2 %cmp/s 0, 8, 32;
-    %jmp/0xz T_1.3, 5;
-    %add 8, 1, 32;
-    %wait E_00A151B0;
-    %jmp T_1.2;
+v01143BF0_0 .net "f_clk", 0 0, C4<z>; 0 drivers
+v01143C48_0 .net "f_i_ack", 0 0, v012CD528_0; 1 drivers
+v012C87E8_0 .net "f_i_ce", 0 0, v01141750_0; 1 drivers
+v012C8840_0 .net "f_i_instr", 31 0, v012CD580_0; 1 drivers
+v012C8898_0 .net "f_i_last", 0 0, v012CD5D8_0; 1 drivers
+v012C88F0_0 .var "f_o_ce", 0 0;
+v012C8948_0 .var "f_o_instr", 31 0;
+v012C89A0_0 .var "f_o_syn", 0 0;
+v012CAC98_0 .net "f_rst", 0 0, C4<z>; 0 drivers
+S_012C7BB0 .scope module, "t" "transmit" 3 16, 4 4, S_012C7990;
+ .timescale 0 0;
+v01145B60_0 .var/i "counter", 31 0;
+v012C32B8 .array "mem_instr", 4 0, 31 0;
+v012C3310_0 .alias "t_clk", 0 0, v01143BF0_0;
+v012C3368_0 .net "t_i_syn", 0 0, v012C89A0_0; 1 drivers
+v012CD528_0 .var "t_o_ack", 0 0;
+v012CD580_0 .var "t_o_instr", 31 0;
+v012CD5D8_0 .var "t_o_last", 0 0;
+v01143B98_0 .alias "t_rst", 0 0, v012CAC98_0;
+E_012C85B0/0 .event negedge, v01143B98_0;
+E_012C85B0/1 .event posedge, v012C3310_0;
+E_012C85B0 .event/or E_012C85B0/0, E_012C85B0/1;
+    .scope S_012C7BB0;
+T_1 ;
+    %wait E_012C85B0;
+    %load/v 8, v01143B98_0, 1;
+    %inv 8, 1;
+    %jmp/0xz  T_1.0, 8;
+    %vpi_call 4 17 "$readmemh", "./source/instr.txt", v012C32B8, 1'sb0, 4'sb0100;
+    %ix/load 0, 32, 0;
+    %assign/v0 v01145B60_0, 0, 0;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD5D8_0, 0, 0;
+    %ix/load 0, 32, 0;
+    %assign/v0 v012CD580_0, 0, 0;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD528_0, 0, 0;
+    %jmp T_1.1;
+T_1.0 ;
+    %load/v 8, v012C3368_0, 1;
+    %jmp/0xz  T_1.2, 8;
+    %ix/getv/s 3, v01145B60_0;
+    %load/av 8, v012C32B8, 32;
+    %ix/load 0, 32, 0;
+    %assign/v0 v012CD580_0, 0, 8;
+    %load/v 8, v01145B60_0, 32;
+    %cmpi/u 8, 4, 32;
+    %mov 8, 4, 1;
+    %jmp/0  T_1.4, 8;
+    %mov 9, 1, 1;
+    %jmp/1  T_1.6, 8;
+T_1.4 ; End of true expr.
+    %jmp/0  T_1.5, 8;
+ ; End of false expr.
+    %blend  9, 0, 1; Condition unknown.
+    %jmp  T_1.6;
+T_1.5 ;
+    %mov 9, 0, 1; Return false value
+T_1.6 ;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD5D8_0, 0, 9;
+    %load/v 8, v01145B60_0, 32;
+   %cmpi/s 8, 4, 32;
+    %mov 8, 5, 1;
+    %jmp/0  T_1.7, 8;
+    %load/v 9, v01145B60_0, 32;
+    %mov 41, 40, 1;
+    %addi 9, 1, 33;
+    %jmp/1  T_1.9, 8;
+T_1.7 ; End of true expr.
+    %jmp/0  T_1.8, 8;
+ ; End of false expr.
+    %blend  9, 0, 33; Condition unknown.
+    %jmp  T_1.9;
+T_1.8 ;
+    %mov 9, 0, 33; Return false value
+T_1.9 ;
+    %ix/load 0, 32, 0;
+    %assign/v0 v01145B60_0, 0, 9;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD528_0, 0, 1;
+    %load/v 8, v012CD5D8_0, 1;
+    %jmp/0xz  T_1.10, 8;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD528_0, 0, 0;
+T_1.10 ;
+    %jmp T_1.3;
+T_1.2 ;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD528_0, 0, 0;
+    %ix/load 0, 1, 0;
+    %assign/v0 v012CD5D8_0, 0, 0;
 T_1.3 ;
-    %set/v v00A219E0_0, 1, 1;
-    %end;
-S_013E8F90 .scope module, "f" "instruction_fetch" 2 21, 3 5, S_013E8DF8;
- .timescale 0 0;
-P_013ED3F4 .param/l "DEPTH" 3 8, +C4<0110>;
-P_013ED408 .param/l "IWIDTH" 3 7, +C4<0100000>;
-P_013ED41C .param/l "PC_WIDTH" 3 6, +C4<0100000>;
-v013E33C0_0 .net "f_clk", 0 0, v00A21618_0; 1 drivers
-v013EE440_0 .net "f_i_ack", 0 0, v00A129A8_0; 1 drivers
-v013EE498_0 .net "f_i_ce", 0 0, v00A217D0_0; 1 drivers
-v013EE4F0_0 .net "f_i_change_pc", 0 0, v00A21930_0; 1 drivers
-v013EE548_0 .net "f_i_instr", 31 0, v013E32B8_0; 1 drivers
-v013EE5A0_0 .net "f_i_last", 0 0, v013E3310_0; 1 drivers
-v013EE5F8_0 .net "f_i_pc", 31 0, v00A21988_0; 1 drivers
-v00A21568_0 .var "f_o_ce", 0 0;
-v00A215C0_0 .var "f_o_instr", 31 0;
-v00A21778_0 .var "f_o_pc", 31 0;
-v00A21828_0 .var "f_o_syn", 0 0;
-v00A21880_0 .var "f_o_valid", 0 0;
-v00A216C8_0 .net "f_rst", 0 0, v00A219E0_0; 1 drivers
-S_013E8F08 .scope module, "t" "transmit" 3 28, 4 4, S_013E8F90;
- .timescale 0 0;
-P_00A2572C .param/l "DEPTH" 4 6, +C4<0110>;
-P_00A25740 .param/l "IWIDTH" 4 5, +C4<0100000>;
-v013E0518_0 .var/i "counter", 31 0;
-v013E7170 .array "mem_instr", 5 0, 31 0;
-v013E7320_0 .alias "t_clk", 0 0, v013E33C0_0;
-v00A127F8_0 .net "t_i_syn", 0 0, v00A21828_0; 1 drivers
-v00A129A8_0 .var "t_o_ack", 0 0;
-v013E32B8_0 .var "t_o_instr", 31 0;
-v013E3310_0 .var "t_o_last", 0 0;
-v013E3368_0 .alias "t_rst", 0 0, v00A216C8_0;
-E_00A15250/0 .event negedge, v013E3368_0;
-E_00A15250/1 .event posedge, v013E7320_0;
-E_00A15250 .event/or E_00A15250/0, E_00A15250/1;
-    .scope S_013E8F08;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_012C7990;
 T_2 ;
-    %wait E_00A15250;
-    %load/v 8, v013E3368_0, 1;
+    %wait E_012C85B0;
+    %load/v 8, v012CAC98_0, 1;
     %inv 8, 1;
     %jmp/0xz  T_2.0, 8;
-    %vpi_call 4 20 "$readmemh", "./source/instr.txt", v013E7170, 1'sb0, 4'sb0101;
     %ix/load 0, 32, 0;
-    %assign/v0 v013E0518_0, 0, 0;
+    %assign/v0 v012C8948_0, 0, 0;
     %ix/load 0, 1, 0;
-    %assign/v0 v013E3310_0, 0, 0;
-    %ix/load 0, 32, 0;
-    %assign/v0 v013E32B8_0, 0, 0;
+    %assign/v0 v012C89A0_0, 0, 0;
     %ix/load 0, 1, 0;
-    %assign/v0 v00A129A8_0, 0, 0;
+    %assign/v0 v012C88F0_0, 0, 0;
     %jmp T_2.1;
 T_2.0 ;
-    %load/v 8, v00A127F8_0, 1;
+    %load/v 8, v012C87E8_0, 1;
     %jmp/0xz  T_2.2, 8;
-    %ix/getv/s 3, v013E0518_0;
-    %load/av 8, v013E7170, 32;
-    %ix/load 0, 32, 0;
-    %assign/v0 v013E32B8_0, 0, 8;
-    %load/v 8, v013E0518_0, 32;
-    %cmpi/u 8, 5, 32;
-    %mov 8, 4, 1;
+    %load/v 8, v012C8898_0, 1;
+    %load/v 9, v01143C48_0, 1;
+    %and 8, 9, 1;
     %jmp/0  T_2.4, 8;
-    %mov 9, 1, 1;
+    %mov 9, 0, 1;
     %jmp/1  T_2.6, 8;
 T_2.4 ; End of true expr.
     %jmp/0  T_2.5, 8;
  ; End of false expr.
-    %blend  9, 0, 1; Condition unknown.
+    %blend  9, 1, 1; Condition unknown.
     %jmp  T_2.6;
 T_2.5 ;
-    %mov 9, 0, 1; Return false value
+    %mov 9, 1, 1; Return false value
 T_2.6 ;
     %ix/load 0, 1, 0;
-    %assign/v0 v013E3310_0, 0, 9;
-    %load/v 8, v013E0518_0, 32;
-   %cmpi/s 8, 5, 32;
-    %mov 8, 5, 1;
-    %jmp/0  T_2.7, 8;
-    %load/v 9, v013E0518_0, 32;
-    %mov 41, 40, 1;
-    %addi 9, 1, 33;
-    %jmp/1  T_2.9, 8;
-T_2.7 ; End of true expr.
-    %jmp/0  T_2.8, 8;
- ; End of false expr.
-    %blend  9, 0, 33; Condition unknown.
-    %jmp  T_2.9;
-T_2.8 ;
-    %mov 9, 0, 33; Return false value
-T_2.9 ;
+    %assign/v0 v012C89A0_0, 0, 9;
+    %load/v 8, v01143C48_0, 1;
+    %jmp/0xz  T_2.7, 8;
+    %load/v 8, v012C8840_0, 32;
     %ix/load 0, 32, 0;
-    %assign/v0 v013E0518_0, 0, 9;
+    %assign/v0 v012C8948_0, 0, 8;
     %ix/load 0, 1, 0;
-    %assign/v0 v00A129A8_0, 0, 1;
-    %load/v 8, v013E3310_0, 1;
-    %jmp/0xz  T_2.10, 8;
+    %assign/v0 v012C88F0_0, 0, 1;
+    %jmp T_2.8;
+T_2.7 ;
     %ix/load 0, 1, 0;
-    %assign/v0 v00A129A8_0, 0, 0;
-T_2.10 ;
+    %assign/v0 v012C88F0_0, 0, 0;
+T_2.8 ;
     %jmp T_2.3;
 T_2.2 ;
     %ix/load 0, 1, 0;
-    %assign/v0 v00A129A8_0, 0, 0;
+    %assign/v0 v012C88F0_0, 0, 0;
     %ix/load 0, 1, 0;
-    %assign/v0 v013E3310_0, 0, 0;
+    %assign/v0 v012C89A0_0, 0, 0;
+    %ix/load 0, 32, 0;
+    %assign/v0 v012C8948_0, 0, 0;
 T_2.3 ;
 T_2.1 ;
     %jmp T_2;
     .thread T_2;
-    .scope S_013E8F90;
+    .scope S_012C7880;
 T_3 ;
-    %wait E_00A15250;
-    %load/v 8, v00A216C8_0, 1;
-    %inv 8, 1;
-    %jmp/0xz  T_3.0, 8;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A215C0_0, 0, 0;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A21778_0, 0, 0;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21828_0, 0, 0;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21568_0, 0, 0;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21880_0, 0, 0;
-    %jmp T_3.1;
-T_3.0 ;
-    %load/v 8, v013EE498_0, 1;
-    %jmp/0xz  T_3.2, 8;
-    %load/v 8, v013EE440_0, 1;
-    %jmp/0xz  T_3.4, 8;
-    %load/v 8, v013EE548_0, 32;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A215C0_0, 0, 8;
-    %load/v 8, v00A21778_0, 32;
-    %mov 40, 0, 1;
-    %addi 8, 4, 33;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A21778_0, 0, 8;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21568_0, 0, 1;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21880_0, 0, 1;
-    %load/v 8, v013EE4F0_0, 1;
-    %jmp/0xz  T_3.6, 8;
-    %load/v 8, v013EE5F8_0, 32;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A21778_0, 0, 8;
-    %jmp T_3.7;
-T_3.6 ;
-    %load/v 8, v00A21778_0, 32;
-    %mov 40, 0, 1;
-    %addi 8, 4, 33;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A21778_0, 0, 8;
-T_3.7 ;
-T_3.4 ;
-    %load/v 8, v013EE5A0_0, 1;
-    %load/v 9, v013EE440_0, 1;
-    %and 8, 9, 1;
-    %jmp/0  T_3.8, 8;
-    %mov 9, 0, 1;
-    %jmp/1  T_3.10, 8;
-T_3.8 ; End of true expr.
-    %jmp/0  T_3.9, 8;
- ; End of false expr.
-    %blend  9, 1, 1; Condition unknown.
-    %jmp  T_3.10;
-T_3.9 ;
-    %mov 9, 1, 1; Return false value
-T_3.10 ;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21828_0, 0, 9;
-    %jmp T_3.3;
-T_3.2 ;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21880_0, 0, 0;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21568_0, 0, 0;
-    %ix/load 0, 1, 0;
-    %assign/v0 v00A21828_0, 0, 0;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A215C0_0, 0, 0;
-    %ix/load 0, 32, 0;
-    %assign/v0 v00A21778_0, 0, 0;
-T_3.3 ;
-T_3.1 ;
-    %jmp T_3;
+    %set/v v01141750_0, 0, 1;
+    %end;
     .thread T_3;
-    .scope S_013E8DF8;
+    .scope S_012C7880;
 T_4 ;
-    %set/v v00A21618_0, 0, 1;
-    %set/v v00A217D0_0, 0, 1;
-    %set/v v00A21930_0, 0, 1;
-    %set/v v00A21988_0, 0, 32;
+    %vpi_call 2 20 "$dumpfile", "./waveform/fetch.vcd";
+    %vpi_call 2 21 "$dumpvars", 1'sb0, S_012C7880;
     %end;
     .thread T_4;
-    .scope S_013E8DF8;
+    .scope S_012C7880;
 T_5 ;
-    %delay 5, 0;
-    %load/v 8, v00A21618_0, 1;
-    %inv 8, 1;
-    %set/v v00A21618_0, 8, 1;
-    %jmp T_5;
-    .thread T_5;
-    .scope S_013E8DF8;
-T_6 ;
-    %vpi_call 2 42 "$dumpfile", "./waveform/fetch.vcd";
-    %vpi_call 2 43 "$dumpvars", 1'sb0, S_013E8DF8;
-    %end;
-    .thread T_6;
-    .scope S_013E8DF8;
-T_7 ;
-    %movi 8, 2, 32;
-    %set/v v00A21B40_0, 8, 32;
-    %fork TD_tb.reset, S_013E9018;
-    %join;
     %movi 8, 8, 32;
-    %set/v v00A21510_0, 8, 32;
-    %fork TD_tb.display, S_013E8E80;
+    %set/v v011416F8_0, 8, 32;
+    %fork TD_tb.display, S_01169300;
     %join;
     %movi 8, 10, 5;
-T_7.0 %cmp/s 0, 8, 5;
-    %jmp/0xz T_7.1, 5;
+T_5.0 %cmp/s 0, 8, 5;
+    %jmp/0xz T_5.1, 5;
     %add 8, 1, 5;
-    %wait E_00A151B0;
-    %jmp T_7.0;
-T_7.1 ;
-    %vpi_call 2 69 "$finish";
+    %delay 10, 0;
+    %jmp T_5.0;
+T_5.1 ;
+    %vpi_call 2 38 "$finish";
     %end;
-    .thread T_7;
+    .thread T_5;
 # The file index is used to find the file name in the following table.
 :file_names 5;
     "N/A";

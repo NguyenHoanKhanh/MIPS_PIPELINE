@@ -1,7 +1,7 @@
 `ifndef DECODER_V
 `define DECODER_V
 `include "./source/header.vh"
-module decode (
+module decoder (
     d_i_ce, d_i_instr, d_o_opcode, d_o_funct, d_o_addr_rs, d_o_addr_rt,
     d_o_addr_rd, d_o_imm, d_o_ce, d_o_reg_dst, d_o_alu_src, d_o_branch, d_o_reg_wr,
     d_o_memread, d_o_memwrite, d_o_memtoreg
@@ -119,7 +119,6 @@ module decode (
                 d_o_alu_src = 1'b0;
                 d_o_reg_wr = 1'b0;
             end
-            // Fixing
             else if (op_load || op_store) begin
                 d_o_addr_rs = rs;
                 d_o_addr_rt = rt;
@@ -128,15 +127,16 @@ module decode (
                 d_o_funct = {`FUNCT_WIDTH{1'b0}};
                 d_o_imm = imm;
                 d_o_ce = 1'b1;
-                d_o_alu_src = 1'b1;
                 d_o_branch = 1'b0;
                 if (op_load) begin
+                    d_o_alu_src = 1'b1;
                     d_o_reg_dst = 1'b0;
                     d_o_reg_wr = 1'b1;
                     d_o_memread = 1'b1;
                     d_o_memtoreg = 1'b1;
                 end
                 else if (op_store) begin
+                    d_o_alu_src = 1'b1;
                     d_o_memwrite = 1'b1;
                 end
             end

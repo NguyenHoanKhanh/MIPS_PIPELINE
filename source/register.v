@@ -11,7 +11,8 @@ module register (
     input [`AWIDTH - 1 : 0] r_addr_out1, r_addr_out2;
     output [`DWIDTH - 1 : 0] r_data_out1, r_data_out2;
     
-    reg [`DWIDTH - 1 : 0] data_reg [0 : (1 << `AWIDTH) - 1];
+    reg [`DWIDTH - 1 : 0] data_reg [((2 ** `AWIDTH) - 1): 0];
+    
     integer i;  
     always @(negedge r_clk, negedge r_rst) begin
         if (!r_rst) begin

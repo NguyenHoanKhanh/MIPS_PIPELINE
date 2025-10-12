@@ -26,7 +26,7 @@ module decoder_stage (
     wire [`AWIDTH - 1 : 0] d_o_addr_rs, d_o_addr_rt;
     wire [`AWIDTH - 1 : 0] ds_i_addr_rd;
     
-    decode d (
+    decoder d (
         .d_i_ce(ds_i_ce), 
         .d_i_instr(ds_i_instr), 
         .d_o_opcode(ds_o_opcode), 

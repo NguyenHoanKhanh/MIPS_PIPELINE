@@ -16,7 +16,6 @@ module instruction_fetch (
     wire f_i_ack;
     wire f_i_last;
     reg f_o_syn;
-    // reg [`PC_WIDTH - 1 : 0] cur_pc;
     transmit t (
         .t_clk(f_clk), 
         .t_rst(f_rst), 

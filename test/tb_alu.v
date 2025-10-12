@@ -1,23 +1,15 @@
 `include "./source/alu.v"
 
 module tb;
-    parameter DWIDTH = 32;
-    parameter IMM_WIDTH = 16;
-    parameter PC_WIDTH = 32;
-    reg [DWIDTH - 1 : 0] a_i_data_rs, a_i_data_rt;
-    reg [IMM_WIDTH - 1 : 0] a_i_imm;
+    reg [`DWIDTH - 1 : 0] a_i_data_rs, a_i_data_rt;
+    reg [`IMM_WIDTH - 1 : 0] a_i_imm;
     reg [4 : 0] a_i_funct;
     reg a_i_alu_src;
-    reg [PC_WIDTH - 1 : 0] a_i_pc;
-    wire [DWIDTH - 1 : 0] alu_value;
-    wire [PC_WIDTH - 1 : 0] alu_pc;
-    wire done;
+    reg [`PC_WIDTH - 1 : 0] a_i_pc;
+    wire [`DWIDTH - 1 : 0] alu_value;
+    wire [`PC_WIDTH - 1 : 0] alu_pc;
 
-    alu #(
-        .DWIDTH(DWIDTH),
-        .IMM_WIDTH(IMM_WIDTH),
-        .PC_WIDTH(PC_WIDTH)
-    ) a (
+    alu a (
         .a_i_data_rs(a_i_data_rs), 
         .a_i_data_rt(a_i_data_rt),
         .a_i_imm(a_i_imm), 
@@ -25,8 +17,7 @@ module tb;
         .a_i_alu_src(a_i_alu_src),
         .a_i_pc(a_i_pc),
         .alu_value(alu_value),
-        .alu_pc(alu_pc),
-        .done(done)
+        .alu_pc(alu_pc)
     );
 
     initial begin
@@ -55,7 +46,7 @@ module tb;
     end
 
     initial begin
-        $monitor($time, " ", "a_i_funct = %b, a_i_data_rs = %0d, a_i_data_rt = %0d, alu_value = %0d, alu_pc = %0d, done = %b", 
-        a_i_funct, a_i_data_rs, a_i_data_rt, alu_value, alu_pc, done);
+        $monitor($time, " ", "a_i_funct = %b, a_i_data_rs = %0d, a_i_data_rt = %0d, alu_value = %0d, alu_pc = %0d", 
+        a_i_funct, a_i_data_rs, a_i_data_rt, alu_value, alu_pc);
     end
 endmodule

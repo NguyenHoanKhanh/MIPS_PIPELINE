@@ -22,12 +22,7 @@ module tb;
     wire ds_o_memread, ds_o_memwrite;
     wire ds_o_memtoreg;
     
-    decoder_stage #(
-        .AWIDTH(AWIDTH),
-        .DWIDTH(DWIDTH),
-        .IWIDTH(IWIDTH),
-        .IMM_WIDTH(IMM_WIDTH)
-    ) ds (
+    decoder_stage ds (
         .ds_clk(ds_clk), 
         .ds_rst(ds_rst), 
         .ds_i_ce(ds_i_ce), 

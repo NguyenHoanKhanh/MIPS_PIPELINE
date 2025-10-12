@@ -1,0 +1,222 @@
+$date
+	Mon Oct 13 01:41:45 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 1 ! v_o_ce $end
+$var wire 32 " v_o_instr [31:0] $end
+$var wire 32 # v_o_pc [31:0] $end
+$var reg 1 $ v_clk $end
+$var reg 1 % v_i_ce $end
+$var reg 1 & v_i_change_pc $end
+$var reg 32 ' v_i_pc [31:0] $end
+$var reg 1 ( v_rst $end
+$scope module v $end
+$var wire 1 ) p_i_o_ce $end
+$var wire 1 * v_clk $end
+$var wire 1 + v_i_ce $end
+$var wire 1 , v_i_change_pc $end
+$var wire 32 - v_i_pc [31:0] $end
+$var wire 1 ! v_o_ce $end
+$var wire 32 . v_o_instr [31:0] $end
+$var wire 32 / v_o_pc [31:0] $end
+$var wire 1 0 v_rst $end
+$scope module pc $end
+$var wire 1 * pc_clk $end
+$var wire 1 + pc_i_ce $end
+$var wire 1 , pc_i_change_pc $end
+$var wire 32 1 pc_i_pc [31:0] $end
+$var wire 1 0 pc_rst $end
+$var reg 1 2 pc_o_ce $end
+$var reg 32 3 pc_o_pc [31:0] $end
+$var reg 32 4 temp_pc [31:0] $end
+$upscope $end
+$scope module i_m $end
+$var wire 1 * im_clk $end
+$var wire 32 5 im_i_address [31:0] $end
+$var wire 1 ) im_i_ce $end
+$var wire 1 0 im_rst $end
+$var reg 1 6 im_o_ce $end
+$var reg 32 7 im_o_instr [31:0] $end
+$upscope $end
+$upscope $end
+$scope task reset $end
+$var integer 32 8 counter [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b10 8
+b0 7
+06
+b0 5
+b0 4
+b0 3
+02
+bx 1
+00
+b0 /
+b0 .
+bx -
+x,
+0+
+0*
+0)
+0(
+bx '
+x&
+0%
+0$
+b0 #
+b0 "
+0!
+$end
+#5
+1$
+1*
+#10
+0$
+0*
+#15
+1(
+10
+1$
+1*
+#20
+0$
+0*
+#25
+b100 4
+12
+1)
+1%
+1+
+1$
+1*
+#30
+0$
+0*
+#35
+b1000 4
+b100 3
+b100 #
+b100 /
+b100 5
+16
+1!
+b1000111010000000000000010100 7
+b1000111010000000000000010100 "
+b1000111010000000000000010100 .
+1$
+1*
+#40
+0$
+0*
+#45
+b100111001100000000000010100 7
+b100111001100000000000010100 "
+b100111001100000000000010100 .
+b1100 4
+b1000 3
+b1000 #
+b1000 /
+b1000 5
+1$
+1*
+#50
+0$
+0*
+#55
+b10000 4
+b1100 3
+b1100 #
+b1100 /
+b1100 5
+bx 7
+bx "
+bx .
+1$
+1*
+#60
+0$
+0*
+#65
+b10100 4
+b10000 3
+b10000 #
+b10000 /
+b10000 5
+1$
+1*
+#70
+0$
+0*
+#75
+b11000 4
+b10100 3
+b10100 #
+b10100 /
+b10100 5
+1$
+1*
+#80
+0$
+0*
+#85
+b11100 4
+b11000 3
+b11000 #
+b11000 /
+b11000 5
+1$
+1*
+#90
+0$
+0*
+#95
+b100000 4
+b11100 3
+b11100 #
+b11100 /
+b11100 5
+1$
+1*
+#100
+0$
+0*
+#105
+b100100 4
+b100000 3
+b100000 #
+b100000 /
+b100000 5
+1$
+1*
+#110
+0$
+0*
+#115
+b101000 4
+b100100 3
+b100100 #
+b100100 /
+b100100 5
+1$
+1*
+#120
+0$
+0*
+#125
+b101100 4
+b101000 3
+b101000 #
+b101000 /
+b101000 5
+1$
+1*
