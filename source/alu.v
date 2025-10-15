@@ -23,7 +23,6 @@ module alu (
     wire funct_sub  = a_i_funct == 5'd1;
     wire funct_and  = a_i_funct == 5'd2;
     wire funct_or   = a_i_funct == 5'd3;
-    wire funct_xor  = a_i_funct == 5'd4;
     wire funct_slt  = a_i_funct == 5'd5;
     wire funct_sltu = a_i_funct == 5'd6;
     wire funct_sll  = a_i_funct == 5'd7;
@@ -55,9 +54,6 @@ module alu (
         end
         else if (funct_or) begin
             alu_value = a_i_data_rs | a_o_data_2;
-        end
-        else if (funct_xor) begin
-            alu_value = a_i_data_rs ^ a_o_data_2;
         end
         else if (funct_slt) begin
             if (($signed(a_i_data_rs) < $signed(a_o_data_2))) begin

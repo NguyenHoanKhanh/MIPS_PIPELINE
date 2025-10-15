@@ -17,7 +17,6 @@ module alucontrol (
                 `SUB:  ac_o_control = 5'd1;
                 `AND:  ac_o_control = 5'd2;
                 `OR:   ac_o_control = 5'd3;
-                `XOR:  ac_o_control = 5'd4;
                 `SLT:  ac_o_control = 5'd5;
                 `SLTU: ac_o_control = 5'd6;
                 `SLL:  ac_o_control = 5'd7;
@@ -51,9 +50,6 @@ module alucontrol (
         end
         else if (ac_i_opcode == `ORI) begin
             ac_o_control = 5'd3;
-        end
-        else if (ac_i_opcode == `XORI) begin
-            ac_o_control = 5'd4;
         end
         else if (ac_i_opcode == `BEQ) begin
             ac_o_control = 5'd15;
