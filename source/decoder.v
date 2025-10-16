@@ -24,7 +24,6 @@ module decoder (
     wire [`DWIDTH - 1 : 0] d_i_data_rs, d_i_data_rt;
 
     wire [`OPCODE_WIDTH - 1 : 0] d_i_opcode = d_i_instr[31 : 26];
-    wire [`FUNCT_WIDTH - 1 : 0] d_i_funct = d_i_instr[5 : 0];
 
     wire op_rtype = d_i_opcode == `RTYPE;
     wire op_load = d_i_opcode == `LOAD;
@@ -37,13 +36,7 @@ module decoder (
     wire op_sltiu = d_i_opcode == `SLTIU;
     wire op_andi = d_i_opcode == `ANDI;
     wire op_ori = d_i_opcode == `ORI;
-    wire op_xori = d_i_opcode == `XORI;
-    
-    wire funct_add = d_i_funct == `ADD;
-    wire funct_sub = d_i_funct == `SUB;
-    wire funct_and = d_i_funct == `AND;
-    wire funct_or = d_i_funct == `OR;
-    wire funct_xor = d_i_funct == `XOR;
+
     wire [4 : 0] rs, rt, rd;
     wire [`OPCODE_WIDTH - 1 : 0] opcode;
     wire [`FUNCT_WIDTH - 1 : 0] funct; 
@@ -87,7 +80,7 @@ module decoder (
                 d_o_alu_src = 1'b0;
                 d_o_reg_wr = 1'b1;
             end
-            else if (op_addi || op_addiu || op_slti || op_sltiu || op_andi || op_ori || op_xori) begin
+            else if (op_addi || op_addiu || op_slti || op_sltiu || op_andi || op_ori) begin
                 d_o_addr_rs = rs;
                 d_o_addr_rt = rt;
                 d_o_addr_rd = {`AWIDTH{1'b0}};

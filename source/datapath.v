@@ -6,6 +6,9 @@
 `include "./source/decoder_stage.v"
 `include "./source/execute_stage.v"
 `include "./source/memory.v"
+`include "./source/forwarding.v"
+`include "./source/mux3_1.v"
+`include "./source/mux2_1.v"
 
 module datapath (
     d_clk, d_rst, d_i_ce, fs_ds_o_pc, write_back_data
@@ -39,15 +42,7 @@ module datapath (
         .im_o_instr(im_o_instr), 
         .im_o_ce(im_o_ce)
     );
-
-    // instruction_fetch is (
-    //     .f_clk(d_clk), 
-    //     .f_rst(d_rst), 
-    //     .f_i_ce(pc_is_o_ce),  
-    //     .f_o_ce(fs_o_ce),
-    //     .f_o_instr(fs_o_instr)
-    // );
-
+    
     always @(posedge d_clk, negedge d_rst) begin
         if (!d_rst) begin
             im_ds_o_ce <= 1'b0;
@@ -70,7 +65,10 @@ module datapath (
     reg ds_es_o_memread, ds_es_o_memwrite;
     reg [`FUNCT_WIDTH - 1 : 0] ds_es_o_funct;
     reg [`OPCODE_WIDTH - 1 : 0] ds_es_o_opcode;
-    reg [`DWIDTH - 1 : 0] ds_es_o_data_rs, ds_es_o_data_rt;
+    reg [`DWIDTH - 1 : 0] ds_mx_o_data_rs, ds_mx_o_data_rt;
+    reg [`AWIDTH - 1 : 0] ds_es_o_addr_rs, ds_es_o_addr_rt;
+    reg [`AWIDTH - 1 : 0] ds_mx_o_addr_rd;
+    reg ds_es_o_reg_wr;
     wire ds_o_ce;
     wire ds_o_branch;
     wire ds_o_alu_src;
@@ -80,6 +78,9 @@ module datapath (
     wire [`FUNCT_WIDTH - 1 : 0] ds_o_funct;
     wire [`OPCODE_WIDTH - 1 : 0] ds_o_opcode;
     wire [`DWIDTH - 1 : 0] ds_o_data_rs, ds_o_data_rt;
+    wire [`AWIDTH - 1 : 0] ds_o_addr_rs, ds_o_addr_rt;
+    wire [`AWIDTH - 1 : 0] ds_i_addr_rd;
+    wire ds_o_reg_wr;
     decoder_stage ds (
         .ds_clk(d_clk), 
         .ds_rst(d_rst), 
@@ -96,15 +97,19 @@ module datapath (
         .ds_o_alu_src(ds_o_alu_src),
         .ds_o_memread(ds_o_memread),
         .ds_o_memwrite(ds_o_memwrite),
-        .ds_o_memtoreg(ds_o_memtoreg)
+        .ds_o_memtoreg(ds_o_memtoreg),
+        .ds_o_addr_rs(ds_o_addr_rs), 
+        .ds_o_addr_rt(ds_o_addr_rt),
+        .ds_i_addr_rd(ds_i_addr_rd),
+        .ds_o_reg_wr(ds_o_reg_wr)
     );
 
     always @(posedge d_clk or negedge d_rst) begin
         if (!d_rst) begin
             ds_es_o_opcode <= {`OPCODE_WIDTH{1'b0}};
             ds_es_o_funct <= {`FUNCT_WIDTH{1'b0}};
-            ds_es_o_data_rs <= {`DWIDTH{1'b0}};
-            ds_es_o_data_rt <= {`DWIDTH{1'b0}};
+            ds_mx_o_data_rs <= {`DWIDTH{1'b0}};
+            ds_mx_o_data_rt <= {`DWIDTH{1'b0}};
             ds_es_o_imm <= {`IMM_WIDTH{1'b0}};
             ds_es_o_ce <= 1'b0;
             ds_es_o_branch <= 1'b0;
@@ -113,40 +118,93 @@ module datapath (
             ds_es_o_memwrite <= 1'b0;
             ds_es_o_memtoreg <= 1'b0;
             ds_es_o_pc <= {`PC_WIDTH{1'b0}};
+            ds_mx_o_addr_rd <= {`AWIDTH{1'b0}};
+            ds_es_o_reg_wr <= 1'b0;
+            ds_es_o_addr_rs <= {`AWIDTH{1'b0}};
+            ds_es_o_addr_rt <= {`AWIDTH{1'b0}};
         end
         else begin
-            ds_es_o_opcode <= ds_o_opcode;
-            ds_es_o_funct <= ds_o_funct;
-            ds_es_o_data_rs <= ds_o_data_rs;
-            ds_es_o_data_rt <= ds_o_data_rt;
-            ds_es_o_imm <= ds_o_imm;
-            ds_es_o_ce <= ds_o_ce;
-            ds_es_o_branch <= ds_o_branch;
-            ds_es_o_alu_src <= ds_o_alu_src;
-            ds_es_o_memread <= ds_o_memread;
-            ds_es_o_memwrite <= ds_o_memwrite;
-            ds_es_o_memtoreg <= ds_o_memtoreg;
-            ds_es_o_pc <= fs_ds_o_pc;
+            if (!f_o_stall) begin
+                ds_es_o_ce <= ds_o_ce;
+                ds_es_o_opcode <= ds_o_opcode;
+                ds_es_o_funct <= ds_o_funct;
+                ds_mx_o_data_rs <= ds_o_data_rs;
+                ds_mx_o_data_rt <= ds_o_data_rt;
+                ds_es_o_imm <= ds_o_imm;
+                ds_es_o_branch <= ds_o_branch;
+                ds_es_o_alu_src <= ds_o_alu_src;
+                ds_es_o_memread <= ds_o_memread;
+                ds_es_o_memwrite <= ds_o_memwrite;
+                ds_es_o_memtoreg <= ds_o_memtoreg;
+                ds_es_o_pc <= fs_ds_o_pc;
+                ds_mx_o_addr_rd <= ds_i_addr_rd;
+                ds_es_o_reg_wr <= ds_o_reg_wr;
+                ds_es_o_addr_rs <= ds_o_addr_rs;
+                ds_es_o_addr_rt <= ds_o_addr_rt;
+            end
+            else begin
+                ds_es_o_ce <= 1'b0;
+                ds_es_o_opcode <= {`OPCODE_WIDTH{1'b0}};
+                ds_es_o_funct <= {`FUNCT_WIDTH{1'b0}};
+                ds_mx_o_data_rs <= {`DWIDTH{1'b0}};
+                ds_mx_o_data_rt <= {`DWIDTH{1'b0}};
+                ds_es_o_imm <= {`IMM_WIDTH{1'b0}};
+                ds_es_o_branch <= 1'b0;
+                ds_es_o_alu_src <= 1'b0;
+                ds_es_o_memread <= 1'b0;
+                ds_es_o_memwrite <= 1'b0;
+                ds_es_o_memtoreg <= 1'b0;
+                ds_es_o_pc <= {`PC_WIDTH{1'b0}};
+                ds_mx_o_addr_rd <= {`AWIDTH{1'b0}};
+                ds_es_o_reg_wr <= 1'b0;
+                ds_es_o_addr_rs <= {`AWIDTH{1'b0}};
+                ds_es_o_addr_rt <= {`AWIDTH{1'b0}};
+            end
         end
     end
+
+    wire [`DWIDTH - 1 : 0] mx_es_o_data_rs1;
+    mux31 m1 (
+        .a(ds_mx_o_data_rs), 
+        .b(es_ms_alu_value), 
+        .c(write_back_data), 
+        .sel(forward_rs1), 
+        .data_out(mx_es_o_data_rs1)
+    );  
+
+    wire [`DWIDTH - 1 : 0] mx_es_o_data_rs2;
+    mux31 m2 (
+        .a(ds_mx_o_data_rt),
+        .b(es_ms_alu_value), 
+        .c(write_back_data), 
+        .sel(forward_rs2), 
+        .data_out(mx_es_o_data_rs2)
+    );
+
+    wire [`AWIDTH - 1 : 0] mx_es_o_addr_rd;
+    mux21 m3 (
+        .a(ds_es_o_addr_rt), 
+        .b(ds_mx_o_addr_rd), 
+        .opcode(ds_es_o_opcode), 
+        .out(mx_es_o_addr_rd)
+    );
 
     reg es_ms_o_ce;
     reg es_ms_o_zero;
     reg es_pc_o_change_pc;
     reg [`DWIDTH - 1 : 0] es_ms_alu_value;
     reg [`PC_WIDTH - 1 : 0] es_pc_o_alu_pc;
-    reg [`FUNCT_WIDTH - 1 : 0] es_ms_o_funct;
-    reg [`OPCODE_WIDTH - 1 : 0] es_ms_o_opcode;
     reg [`DWIDTH - 1 : 0] es_ms_o_data_rt;
     reg es_ms_o_memread, es_ms_o_memwrite;
     reg es_ms_o_memtoreg;
+    reg [`AWIDTH - 1 : 0] es_ms_o_addr_rd;
+    reg es_ms_o_regwr;
     wire es_o_ce;
     wire es_o_zero;
-    wire es_change_pc;
+    wire es_o_change_pc;
     wire [`PC_WIDTH - 1 : 0] es_o_alu_pc;
     wire [`DWIDTH - 1 : 0] es_o_alu_value;
-    wire [`FUNCT_WIDTH - 1 : 0] es_o_funct;
-    wire [`OPCODE_WIDTH - 1 : 0] es_o_opcode;
+
     execute es (
         .es_i_ce(ds_es_o_ce), 
         .es_i_alu_src(ds_es_o_alu_src), 
@@ -155,12 +213,10 @@ module datapath (
         .es_i_imm(ds_es_o_imm), 
         .es_i_alu_op(ds_es_o_opcode), 
         .es_i_alu_funct(ds_es_o_funct),
-        .es_i_data_rs(ds_es_o_data_rs), 
-        .es_i_data_rt(ds_es_o_data_rt), 
+        .es_i_data_rs(mx_es_o_data_rs1), 
+        .es_i_data_rt(mx_es_o_data_rs2), 
         .es_o_alu_value(es_o_alu_value), 
         .es_o_alu_pc(es_o_alu_pc),
-        .es_o_opcode(es_o_opcode), 
-        .es_o_funct(es_o_funct), 
         .es_o_zero(es_o_zero),
         .es_o_ce(es_o_ce),
         .es_o_change_pc(es_o_change_pc)
@@ -170,8 +226,6 @@ module datapath (
         if (!d_rst) begin
             es_ms_alu_value <= {`DWIDTH{1'b0}};
             es_pc_o_alu_pc <= {`PC_WIDTH{1'b0}};
-            es_ms_o_opcode <= {`OPCODE_WIDTH{1'b0}};
-            es_ms_o_funct <= {`FUNCT_WIDTH{1'b0}};
             es_ms_o_zero <= 1'b0;
             es_ms_o_ce <= 1'b0;
             es_pc_o_change_pc <= 1'b0;
@@ -179,26 +233,30 @@ module datapath (
             es_ms_o_memread <= 1'b0;
             es_ms_o_memwrite <= 1'b0;
             es_ms_o_memtoreg <= 1'b0;
+            es_ms_o_addr_rd <= {`AWIDTH{1'b0}};
+            es_ms_o_regwr <= 1'b0;
         end
         else begin
             es_ms_alu_value <= es_o_alu_value;
             es_pc_o_alu_pc <= es_o_alu_pc;
-            es_ms_o_opcode <= es_o_opcode;
-            es_ms_o_funct <= es_o_funct;
             es_ms_o_zero <= es_o_zero;
             es_ms_o_ce <= es_o_ce;
             es_pc_o_change_pc <= es_o_change_pc;
-            es_ms_o_data_rt <= ds_es_o_data_rt;
+            es_ms_o_data_rt <= mx_es_o_data_rs2;
             es_ms_o_memread <= ds_es_o_memread;
             es_ms_o_memwrite <= ds_es_o_memwrite;
             es_ms_o_memtoreg <= ds_es_o_memtoreg;
+            es_ms_o_addr_rd <= mx_es_o_addr_rd;
+            es_ms_o_regwr <= ds_es_o_reg_wr;
         end
     end
     
     reg ms_wb_o_memtoreg;
+    reg ms_wb_o_regwr;
+    reg [`AWIDTH - 1 : 0] ms_wb_o_addr_rd;
     reg [`DWIDTH - 1 : 0] ms_wb_o_load_data;
-    wire [`DWIDTH - 1 : 0] ms_o_load_data;
     reg [`DWIDTH - 1 : 0] ms_wb_o_alu_value;
+    wire [`DWIDTH - 1 : 0] ms_o_load_data;
     memory m (
         .m_clk(d_clk), 
         .m_rst(d_rst), 
@@ -215,13 +273,32 @@ module datapath (
             ms_wb_o_memtoreg <= 1'b0;
             ms_wb_o_load_data <= {`DWIDTH{1'b0}};
             ms_wb_o_alu_value <= {`DWIDTH{1'b0}};
+            ms_wb_o_addr_rd <= {`AWIDTH{1'b0}};
+            ms_wb_o_regwr <= 1'b0;
         end
         else begin
             ms_wb_o_memtoreg <= es_ms_o_memtoreg;
             ms_wb_o_load_data <= ms_o_load_data;
             ms_wb_o_alu_value <= es_ms_alu_value;
+            ms_wb_o_addr_rd <= es_ms_o_addr_rd;
+            ms_wb_o_regwr <= es_ms_o_regwr;
         end
     end
+
+    wire [1 : 0] forward_rs1, forward_rs2;
+    wire f_o_stall;
+    forwarding f (
+        .ds_es_i_opcode(ds_es_o_opcode),
+        .ds_es_i_addr_rs1(ds_es_o_addr_rs), 
+        .ds_es_i_addr_rs2(ds_es_o_addr_rt), 
+        .es_ms_i_addr_rd(es_ms_o_addr_rd), 
+        .es_ms_i_regwrite(es_ms_o_regwr), 
+        .ms_wb_i_regwr(ms_wb_o_regwr), 
+        .ms_wb_i_addr_rd(ms_wb_o_addr_rd), 
+        .f_o_control_rs1(forward_rs1), 
+        .f_o_control_rs2(forward_rs2),
+        .f_o_stall(f_o_stall)
+    );
 
     assign write_back_data = (ms_wb_o_memtoreg) ? ms_wb_o_load_data : ms_wb_o_alu_value;
 endmodule

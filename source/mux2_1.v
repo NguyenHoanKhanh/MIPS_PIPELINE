@@ -3,13 +3,17 @@
 `include "./source/header.vh"
 
 module mux21 (
-    a, b, c, sel, data_out
+    a, b, opcode, out
 );
-    input [`DWIDTH - 1 : 0] a, b, c;
-    input [1 : 0] sel;
-    output [`DWIDTH - 1 : 0] data_out;
+    input [`AWIDTH - 1 : 0] a, b;
+    input [`OPCODE_WIDTH - 1 : 0] opcode;
+    output [`AWIDTH - 1 : 0] out;
 
-    assign data_out = (sel == 2'd0) ? a : (sel == 2'd1) ? b : 
-                        (sel == 2'd2) ? c : {`DWIDTH{1'b0}};
+    wire op_itype = (opcode == `LOAD || opcode == `ADDI || opcode == `ADDIU || 
+                    opcode == `SLTI || opcode == `SLTIU || opcode == `ANDI ||
+                    opcode == `ORI);
+    wire op_rtype = (opcode == `RTYPE);
+
+    assign out = (op_itype) ? a : (op_rtype) ? b : {`AWIDTH{1'b0}};
 endmodule
-`endif
+`endif 
