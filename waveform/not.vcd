@@ -1,0 +1,95 @@
+$date
+	Wed Oct 22 22:16:23 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 32 ! out [31:0] $end
+$var reg 32 " a [31:0] $end
+$scope module n $end
+$var wire 32 # a [31:0] $end
+$var wire 32 $ out [31:0] $end
+$scope begin gen_not[0] $end
+$upscope $end
+$scope begin gen_not[1] $end
+$upscope $end
+$scope begin gen_not[2] $end
+$upscope $end
+$scope begin gen_not[3] $end
+$upscope $end
+$scope begin gen_not[4] $end
+$upscope $end
+$scope begin gen_not[5] $end
+$upscope $end
+$scope begin gen_not[6] $end
+$upscope $end
+$scope begin gen_not[7] $end
+$upscope $end
+$scope begin gen_not[8] $end
+$upscope $end
+$scope begin gen_not[9] $end
+$upscope $end
+$scope begin gen_not[10] $end
+$upscope $end
+$scope begin gen_not[11] $end
+$upscope $end
+$scope begin gen_not[12] $end
+$upscope $end
+$scope begin gen_not[13] $end
+$upscope $end
+$scope begin gen_not[14] $end
+$upscope $end
+$scope begin gen_not[15] $end
+$upscope $end
+$scope begin gen_not[16] $end
+$upscope $end
+$scope begin gen_not[17] $end
+$upscope $end
+$scope begin gen_not[18] $end
+$upscope $end
+$scope begin gen_not[19] $end
+$upscope $end
+$scope begin gen_not[20] $end
+$upscope $end
+$scope begin gen_not[21] $end
+$upscope $end
+$scope begin gen_not[22] $end
+$upscope $end
+$scope begin gen_not[23] $end
+$upscope $end
+$scope begin gen_not[24] $end
+$upscope $end
+$scope begin gen_not[25] $end
+$upscope $end
+$scope begin gen_not[26] $end
+$upscope $end
+$scope begin gen_not[27] $end
+$upscope $end
+$scope begin gen_not[28] $end
+$upscope $end
+$scope begin gen_not[29] $end
+$upscope $end
+$scope begin gen_not[30] $end
+$upscope $end
+$scope begin gen_not[31] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx $
+bx #
+bx "
+bx !
+$end
+#10
+b11111111111111111111111111110101 !
+b11111111111111111111111111110101 $
+b1010 "
+b1010 #
+#30

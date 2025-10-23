@@ -1,7 +1,13 @@
 `define OPCODE_WIDTH 6
 `define RTYPE 0
 `define LOAD 6'h23
+`define LOAD_BYTE_UNSIGNED 6'h24
+`define LOAD_HALF_UNSIGNED 6'h25
+`define LOAD_BYTE 6'h26
+`define LOAD_HALF 6'h27
 `define STORE 6'h2b
+`define STORE_BYTE 6'h2c
+`define STORE_HALF 6'h2d
 `define BEQ 6'h4
 `define BNE 6'h5
 `define ADDI 6'h8
@@ -10,13 +16,13 @@
 `define SLTIU 6'hb
 `define ANDI 6'hc
 `define ORI 6'hd
-`define LUI 6'h1
-`define AUIPC 6'h2
+`define LUI 6'hf
 `define JAL 6'h3
 
 `define FUNCT_WIDTH 6
 `define ADD 6'b100000
 `define SUB 6'b100010
+`define SUBU 6'b100011
 `define AND 6'b100100
 `define OR 6'b100101
 `define NOR 6'b100111
@@ -30,6 +36,7 @@
 `define GE 6'b101100
 `define GEU 6'b101101
 `define ADDU 6'b100001
+`define JR 6'b001000
 
 `define DWIDTH 32
 `define IWIDTH 32
@@ -38,4 +45,5 @@
 `define AWIDTH_MEM 32
 `define IMM_WIDTH 16
 `define ALU_CONTROL 5
+`define JUMP_WIDTH 26
 `define DEPTH 2

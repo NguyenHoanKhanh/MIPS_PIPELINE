@@ -9,9 +9,7 @@ module imem (
     input [`PC_WIDTH - 1 : 0] im_i_address;
     output reg [`IWIDTH - 1 : 0] im_o_instr;
     output reg im_o_ce;
-
-    reg temp_o_ce;
-    reg [`PC_WIDTH - 1 : 0] temp_address;
+    
     reg [`IWIDTH - 1 : 0] mem_instr [`DEPTH - 1 : 0];
 
     always @(posedge im_clk, negedge im_rst) begin

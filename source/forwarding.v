@@ -3,14 +3,14 @@
 `include "./source/header.vh"
 module forwarding (
     ds_es_i_opcode, ds_es_i_addr_rs1, ds_es_i_addr_rs2, es_ms_i_addr_rd, es_ms_i_regwrite, 
-    ms_wb_i_regwr, ms_wb_i_addr_rd, f_o_control_rs1, f_o_control_rs2, f_o_stall
+    ms_wb_i_regwrite, ms_wb_i_addr_rd, f_o_control_rs1, f_o_control_rs2, f_o_stall
 );
     input [`OPCODE_WIDTH - 1 : 0] ds_es_i_opcode;
     input [`AWIDTH - 1 : 0] ds_es_i_addr_rs1, ds_es_i_addr_rs2;
     input [`AWIDTH - 1 : 0] es_ms_i_addr_rd;
     input es_ms_i_regwrite;
     input [`AWIDTH - 1 : 0] ms_wb_i_addr_rd;
-    input ms_wb_i_regwr;
+    input ms_wb_i_regwrite;
     output reg [1 : 0] f_o_control_rs1, f_o_control_rs2;
     output reg f_o_stall;
 
@@ -32,7 +32,7 @@ module forwarding (
         if ((ds_es_i_addr_rs1 == es_ms_i_addr_rd) && es_ms_i_regwrite) begin
             f_o_control_rs1 = 2'd1;
         end 
-        else if ((ds_es_i_addr_rs1 == ms_wb_i_addr_rd) && ms_wb_i_regwr) begin
+        else if ((ds_es_i_addr_rs1 == ms_wb_i_addr_rd) && ms_wb_i_regwrite) begin
             f_o_control_rs1 = 2'd2;
         end
         else begin
@@ -42,7 +42,7 @@ module forwarding (
         if ((ds_es_i_addr_rs2 == es_ms_i_addr_rd) && es_ms_i_regwrite) begin
             f_o_control_rs2 = 2'd1;
         end 
-        else if ((ds_es_i_addr_rs2 == ms_wb_i_addr_rd) && ms_wb_i_regwr) begin
+        else if ((ds_es_i_addr_rs2 == ms_wb_i_addr_rd) && ms_wb_i_regwrite) begin
             f_o_control_rs2 = 2'd2;
         end
         else begin

@@ -3,20 +3,12 @@
 module tb;
     reg v_clk, v_rst;
     reg v_i_ce;
-    reg v_i_change_pc;
-    reg [`PC_WIDTH - 1 : 0] v_i_pc;
     wire [`IWIDTH - 1 : 0] v_o_instr;
     wire [`PC_WIDTH - 1 : 0] v_o_pc;
-    wire v_o_ce;
+    wire [`DWIDTH - 1 : 0] es_o_alu_value;
+    wire es_o_ce;
     verify v (
-        .v_clk(v_clk), 
-        .v_rst(v_rst), 
-        .v_i_ce(v_i_ce), 
-        .v_i_change_pc(v_i_change_pc), 
-        .v_i_pc(v_i_pc), 
-        .v_o_pc(v_o_pc), 
-        .v_o_instr(v_o_instr), 
-        .v_o_ce(v_o_ce)
+        v_clk, v_rst, v_i_ce, v_o_instr, v_o_pc, es_o_alu_value, es_o_ce
     );
 
     initial begin
@@ -47,7 +39,7 @@ module tb;
     end
 
     initial begin
-        $monitor($time, " ", "v_o_instr = %h, v_o_pc = %d, v_o_ce = %b",
-        v_o_instr, v_o_pc, v_o_ce);
+        $monitor($time, " ", "v_o_instr = %h, v_o_pc = %d, ds_o_jal = %b, ds_o_jal_addr = %d, ds_o_jr = %b, r_data_in = %d, r_addr_in = %d, r_addr_out1 = %d, r_data_out1 = %d, d_o_reg_wr = %b, es_o_alu_value = %d",
+        v_o_instr, v_o_pc, v.ds_o_jal, v.ds_o_jal_addr, v.ds_o_jr, v.ds.r.r_data_in, v.ds.r.r_addr_in, v.ds.r.r_addr_out1, v.ds.r.r_data_out1, v.ds.d.d_o_reg_wr, v.es_o_alu_value);
     end
 endmodule

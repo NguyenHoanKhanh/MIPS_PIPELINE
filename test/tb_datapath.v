@@ -3,7 +3,7 @@
 module tb;
     reg d_clk, d_rst;
     reg d_i_ce;
-    wire [`PC_WIDTH - 1 : 0] fs_ds_o_pc;
+    wire [`PC_WIDTH - 1 : 0] im_ds_o_pc;
     wire [`DWIDTH - 1 : 0] write_back_data;
 
     datapath d (
@@ -11,7 +11,7 @@ module tb;
         .d_rst(d_rst), 
         .d_i_ce(d_i_ce), 
         .write_back_data(write_back_data),
-        .fs_ds_o_pc(fs_ds_o_pc)
+        .im_ds_o_pc(im_ds_o_pc)
     );
 
     initial begin
@@ -41,7 +41,7 @@ module tb;
     end
 
     initial begin  
-        $monitor("%0t: PC=%0d, instr=%h, alu_out=%h", 
-            $time, fs_ds_o_pc, d.im_ds_o_instr, write_back_data);
+        $monitor("%0t: PC = %0d, instr = %h, alu_out = %h", 
+            $time, im_ds_o_pc, d.im_ds_o_instr, write_back_data);
     end
 endmodule

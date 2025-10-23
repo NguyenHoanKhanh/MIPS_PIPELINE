@@ -15,7 +15,7 @@ module alu (
     output reg [`PC_WIDTH - 1 : 0] alu_pc;
     output reg a_o_change_pc;
     // sign-extend immediate (parameterized)
-    wire [`DWIDTH - 1 : 0] a_imm = {{(`DWIDTH-`IMM_WIDTH){a_i_imm[`IMM_WIDTH-1]}}, a_i_imm};
+    wire [`DWIDTH - 1 : 0] a_imm = {{(`DWIDTH - `IMM_WIDTH){a_i_imm[`IMM_WIDTH - 1]}}, a_i_imm};
     wire [`DWIDTH - 1 : 0] a_o_data_2 = (a_i_alu_src) ? a_imm : a_i_data_rt;
 
     // funct signals (optional, for readability)
@@ -23,6 +23,7 @@ module alu (
     wire funct_sub  = a_i_funct == 5'd1;
     wire funct_and  = a_i_funct == 5'd2;
     wire funct_or   = a_i_funct == 5'd3;
+    wire funct_nor  = a_i_funct == 5'd4;
     wire funct_slt  = a_i_funct == 5'd5;
     wire funct_sltu = a_i_funct == 5'd6;
     wire funct_sll  = a_i_funct == 5'd7;
@@ -35,6 +36,9 @@ module alu (
     wire funct_addu = a_i_funct == 5'd14;
     wire funct_beq  = a_i_funct == 5'd15;
     wire funct_bne  = a_i_funct == 5'd16;
+    wire funct_subu = a_i_funct == 5'd17;
+    wire funct_lui  = a_i_funct == 5'd18;
+    wire funct_jr = a_i_funct == 5'd19;
     // combinational ALU: always @*
     always @(*) begin
         alu_value = {`DWIDTH{1'b0}};
@@ -49,15 +53,21 @@ module alu (
         else if (funct_sub) begin
             alu_value = a_i_data_rs - a_o_data_2;
         end
+        else if (funct_subu) begin
+            alu_value = $unsigned(a_i_data_rs) - $unsigned(a_o_data_2); 
+        end
         else if (funct_and) begin
             alu_value = a_i_data_rs & a_o_data_2;
         end
         else if (funct_or) begin
             alu_value = a_i_data_rs | a_o_data_2;
         end
+        else if (funct_nor) begin
+            alu_value = ~(a_i_data_rs | a_o_data_2);
+        end
         else if (funct_slt) begin
             if (($signed(a_i_data_rs) < $signed(a_o_data_2))) begin
-                alu_value = {{(`DWIDTH - 1){1'b0}},1'b1};
+                alu_value = {{(`DWIDTH - 1){1'b0}}, 1'b1};
             end
             else begin
                 alu_value = {`DWIDTH{1'b0}};
@@ -65,7 +75,7 @@ module alu (
         end
         else if (funct_sltu) begin
             if (($unsigned(a_i_data_rs) < $unsigned(a_o_data_2))) begin
-                alu_value ={{(`DWIDTH - 1){1'b0}},1'b1};
+                alu_value ={{(`DWIDTH - 1){1'b0}}, 1'b1};
             end
             else begin
                 alu_value = {`DWIDTH{1'b0}};
@@ -125,6 +135,13 @@ module alu (
                 alu_pc = {`PC_WIDTH{1'b0}}; 
                 a_o_change_pc = 1'b0;
             end
+        end
+        else if (funct_lui) begin
+            alu_value = {a_imm, 16'b0};
+        end
+        else if (funct_jr) begin
+            alu_pc = a_i_data_rt;
+            a_o_change_pc = 1'b1;
         end
         else begin
             alu_pc = {`PC_WIDTH{1'b0}};

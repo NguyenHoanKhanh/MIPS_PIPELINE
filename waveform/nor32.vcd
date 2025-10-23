@@ -1,0 +1,179 @@
+$date
+	Wed Oct 22 23:03:36 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 32 ! result [31:0] $end
+$var reg 32 " a [31:0] $end
+$var reg 32 # b [31:0] $end
+$scope module mo32 $end
+$var wire 32 $ a [31:0] $end
+$var wire 32 % b [31:0] $end
+$var wire 32 & result [31:0] $end
+$var wire 32 ' temp_or [31:0] $end
+$scope module o32 $end
+$var wire 32 ( a [31:0] $end
+$var wire 32 ) b [31:0] $end
+$var wire 32 * result [31:0] $end
+$scope begin gen_or[0] $end
+$upscope $end
+$scope begin gen_or[1] $end
+$upscope $end
+$scope begin gen_or[2] $end
+$upscope $end
+$scope begin gen_or[3] $end
+$upscope $end
+$scope begin gen_or[4] $end
+$upscope $end
+$scope begin gen_or[5] $end
+$upscope $end
+$scope begin gen_or[6] $end
+$upscope $end
+$scope begin gen_or[7] $end
+$upscope $end
+$scope begin gen_or[8] $end
+$upscope $end
+$scope begin gen_or[9] $end
+$upscope $end
+$scope begin gen_or[10] $end
+$upscope $end
+$scope begin gen_or[11] $end
+$upscope $end
+$scope begin gen_or[12] $end
+$upscope $end
+$scope begin gen_or[13] $end
+$upscope $end
+$scope begin gen_or[14] $end
+$upscope $end
+$scope begin gen_or[15] $end
+$upscope $end
+$scope begin gen_or[16] $end
+$upscope $end
+$scope begin gen_or[17] $end
+$upscope $end
+$scope begin gen_or[18] $end
+$upscope $end
+$scope begin gen_or[19] $end
+$upscope $end
+$scope begin gen_or[20] $end
+$upscope $end
+$scope begin gen_or[21] $end
+$upscope $end
+$scope begin gen_or[22] $end
+$upscope $end
+$scope begin gen_or[23] $end
+$upscope $end
+$scope begin gen_or[24] $end
+$upscope $end
+$scope begin gen_or[25] $end
+$upscope $end
+$scope begin gen_or[26] $end
+$upscope $end
+$scope begin gen_or[27] $end
+$upscope $end
+$scope begin gen_or[28] $end
+$upscope $end
+$scope begin gen_or[29] $end
+$upscope $end
+$scope begin gen_or[30] $end
+$upscope $end
+$scope begin gen_or[31] $end
+$upscope $end
+$upscope $end
+$scope begin gen_nor[0] $end
+$upscope $end
+$scope begin gen_nor[1] $end
+$upscope $end
+$scope begin gen_nor[2] $end
+$upscope $end
+$scope begin gen_nor[3] $end
+$upscope $end
+$scope begin gen_nor[4] $end
+$upscope $end
+$scope begin gen_nor[5] $end
+$upscope $end
+$scope begin gen_nor[6] $end
+$upscope $end
+$scope begin gen_nor[7] $end
+$upscope $end
+$scope begin gen_nor[8] $end
+$upscope $end
+$scope begin gen_nor[9] $end
+$upscope $end
+$scope begin gen_nor[10] $end
+$upscope $end
+$scope begin gen_nor[11] $end
+$upscope $end
+$scope begin gen_nor[12] $end
+$upscope $end
+$scope begin gen_nor[13] $end
+$upscope $end
+$scope begin gen_nor[14] $end
+$upscope $end
+$scope begin gen_nor[15] $end
+$upscope $end
+$scope begin gen_nor[16] $end
+$upscope $end
+$scope begin gen_nor[17] $end
+$upscope $end
+$scope begin gen_nor[18] $end
+$upscope $end
+$scope begin gen_nor[19] $end
+$upscope $end
+$scope begin gen_nor[20] $end
+$upscope $end
+$scope begin gen_nor[21] $end
+$upscope $end
+$scope begin gen_nor[22] $end
+$upscope $end
+$scope begin gen_nor[23] $end
+$upscope $end
+$scope begin gen_nor[24] $end
+$upscope $end
+$scope begin gen_nor[25] $end
+$upscope $end
+$scope begin gen_nor[26] $end
+$upscope $end
+$scope begin gen_nor[27] $end
+$upscope $end
+$scope begin gen_nor[28] $end
+$upscope $end
+$scope begin gen_nor[29] $end
+$upscope $end
+$scope begin gen_nor[30] $end
+$upscope $end
+$scope begin gen_nor[31] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx *
+bx )
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#1
+b11111111111111111111111111110110 !
+b11111111111111111111111111110110 &
+b1001 '
+b1001 *
+b1001 #
+b1001 %
+b1001 )
+b1000 "
+b1000 $
+b1000 (
+#21

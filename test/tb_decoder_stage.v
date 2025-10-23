@@ -21,6 +21,9 @@ module tb;
     wire ds_o_alu_src;
     wire ds_o_memread, ds_o_memwrite;
     wire ds_o_memtoreg;
+    wire ds_o_reg_wr;
+    wire [`JUMP_WIDTH - 1 : 0] ds_o_jal_addr;
+    wire ds_o_jal;
     
     decoder_stage ds (
         .ds_clk(ds_clk), 
@@ -34,11 +37,14 @@ module tb;
         .ds_o_data_rt(ds_o_data_rt), 
         .ds_o_imm(ds_o_imm),
         .ds_o_ce(ds_o_ce),
-        .ds_o_branch(ds_o_branch),
+        // .ds_o_branch(ds_o_branch),
         .ds_o_alu_src(ds_o_alu_src),
         .ds_o_memtoreg(ds_o_memtoreg),
-        .ds_o_memread(ds_o_memread),
-        .ds_o_memwrite(ds_o_memwrite)
+        // .ds_o_memread(ds_o_memread),
+        .ds_o_memwrite(ds_o_memwrite),
+        .ds_o_reg_wr(ds_o_reg_wr),
+        .ds_o_jal_addr(ds_o_jal_addr),
+        .ds_o_jal(ds_o_jal)
     );
 
     initial begin
@@ -68,12 +74,12 @@ module tb;
         // @(posedge ds_clk) ds_i_instr = 32'h01093822; // AND $7,$8,$9
         // @(posedge ds_clk) ds_i_instr = 32'h016C5023; // OR  $10,$11,$12
         // @(posedge ds_clk) ds_i_instr = 32'h01CF6824; // XOR $13,$14,$15
-        @(posedge ds_clk) ds_i_instr = 32'h0424000A; // SLTI $4, $1, 10
+        @(posedge ds_clk) ds_i_instr = 32'h0C400000; // JAL 0x10000000
         #20; $finish;
     end
 
     initial begin
-        $monitor($time, " ", "ds_o_opcode = %b, ds_o_funct = %b, ds_o_data_rs = %d, ds_o_data_rt = %d, ds_o_imm = %d, d_r_o_reg_dst = %b, ds_o_ce = %b, ds_o_branch = %b, ds_o_alu_src = %b, d_r_o_reg_wr = %b, ds_o_memread = %b, ds_o_memwrite = %b, ds_o_memtoreg = %b",
-        ds_o_opcode, ds_o_funct, ds_o_data_rs, ds_o_data_rt, ds_o_imm, ds.d_r_o_reg_dst, ds_o_ce, ds_o_branch, ds_o_alu_src, ds.d_r_o_reg_wr, ds_o_memread, ds_o_memwrite, ds_o_memtoreg);
+        $monitor($time, " ", "ds_o_opcode = %b, ds_o_funct = %b, ds_o_data_rs = %d, ds_o_data_rt = %d, ds_o_imm = %d, ds_o_ce = %b, ds_o_alu_src = %b, d_r_o_reg_wr = %b, ds_o_memwrite = %b, ds_o_memtoreg = %b, ds_o_jal_addr = %h, ds_o_jal = %b",
+        ds_o_opcode, ds_o_funct, ds_o_data_rs, ds_o_data_rt, ds_o_imm, ds_o_ce, ds_o_alu_src, ds_o_reg_wr, ds_o_memwrite, ds_o_memtoreg, ds_o_jal_addr, ds_o_jal);
     end
 endmodule

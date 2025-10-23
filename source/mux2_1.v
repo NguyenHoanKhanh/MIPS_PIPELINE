@@ -2,7 +2,7 @@
 `define MUX2_1_V
 `include "./source/header.vh"
 
-module mux21 (
+module mux2_1 (
     a, b, opcode, out
 );
     input [`AWIDTH - 1 : 0] a, b;
