@@ -314,19 +314,6 @@ module datapath (
         end
     end
 
-    wire mx_pc_o_change_pc;
-    wire [`PC_WIDTH - 1 : 0] mx_pc_o_alu_pc;
-    mux21 m4 (
-        .a(ds_o_change_pc), 
-        .b(es_pc_o_change_pc), 
-        .c(ds_o_alu_pc), 
-        .d(es_pc_o_alu_pc), 
-        .opcode(es_ms_o_opcode), 
-        .funct(ds_es_o_funct), 
-        .out_change_pc(mx_pc_o_change_pc), 
-        .out_alu_pc(mx_pc_o_alu_pc)
-    );
-    
     reg ms_wb_o_memtoreg;
     reg ms_wb_o_regwr;
     reg [`AWIDTH - 1 : 0] ms_wb_o_addr_rd;
