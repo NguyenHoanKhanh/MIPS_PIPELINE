@@ -63,7 +63,7 @@ module decoder (
         d_o_alu_src = 1'b0;
         d_o_memwrite = 1'b0;
         d_o_memtoreg = 1'b0;
-        d_o_imm = {`DWIDTH{1'b0}};
+        d_o_imm = {`IMM_WIDTH{1'b0}};
         d_o_addr_rs = {`AWIDTH{1'b0}};
         d_o_addr_rt = {`AWIDTH{1'b0}};
         d_o_addr_rd = {`AWIDTH{1'b0}};
@@ -169,7 +169,7 @@ module decoder (
                 d_o_addr_rd = 5'd31;
                 d_o_opcode = opcode;
                 d_o_funct = {`FUNCT_WIDTH{1'b0}};
-                d_o_imm = {`DWIDTH{1'b0}};
+                d_o_imm = {`IMM_WIDTH{1'b0}};
                 d_o_ce = 1'b1;
                 d_o_reg_wr = 1'b1;
                 d_o_branch = 1'b0;
