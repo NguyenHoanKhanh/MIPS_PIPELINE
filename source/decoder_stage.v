@@ -3,7 +3,6 @@
 `include "./source/decoder.v"
 `include "./source/register.v"
 `include "./source/header.vh"
-`include "./source/branch.v"
 module decoder_stage (
     ds_clk, ds_rst, ds_i_ce, ds_i_data_rd, ds_i_addr_rd, ds_i_instr, ds_i_reg_wr,
     ds_o_opcode, ds_o_funct, ds_o_data_rs, ds_o_data_rt, ds_o_imm, ds_o_ce, ds_o_memwrite,
@@ -15,7 +14,6 @@ module decoder_stage (
     input [`DWIDTH - 1 : 0] ds_i_data_rd;
     input [`AWIDTH - 1 : 0] ds_i_addr_rd;
     input ds_i_reg_wr;
-    // input [`PC_WIDTH - 1 : 0] ds_i_pc;
     input [`IWIDTH - 1 : 0] ds_i_instr;
     output [`OPCODE_WIDTH - 1 : 0] ds_o_opcode;
     output [`FUNCT_WIDTH - 1 : 0] ds_o_funct;
@@ -32,8 +30,6 @@ module decoder_stage (
     output ds_o_memtoreg;
     output ds_o_jal;
     output [`JUMP_WIDTH - 1 : 0] ds_o_jal_addr;
-    // output ds_o_change_pc;
-    // output [`PC_WIDTH - 1 : 0] ds_o_alu_pc;
     output [`DWIDTH - 1 : 0] ds_o_alu_value;
     output ds_o_jr;
     // wire d_r_o_reg_dst;
@@ -74,24 +70,5 @@ module decoder_stage (
         .r_data_out1(ds_o_data_rs), 
         .r_data_out2(ds_o_data_rt) 
     );
-
-    // wire change_pc;
-    // wire [`PC_WIDTH - 1 : 0] alu_pc;
-    // branch b (
-    //     .b_i_opcode(ds_o_opcode), 
-    //     .b_i_data_rs(ds_o_data_rs), 
-    //     .b_i_data_rt(ds_o_data_rt), 
-    //     .b_i_pc(ds_i_pc), 
-    //     .b_i_imm(ds_o_imm), 
-    //     .b_o_change_pc(change_pc), 
-    //     .b_o_alu_pc(alu_pc),
-    //     .b_o_alu_value(ds_o_alu_value)
-    // );
-
-    // wire take_beq = ds_o_branch && (ds_o_data_rs == ds_o_data_rt);
-    // wire take_bne = ds_o_branch && !(ds_o_data_rs == ds_o_data_rt);
-    // wire take_branch = ds_i_ce && (take_beq || take_bne);
-    // assign ds_o_change_pc = take_branch & change_pc;
-    // assign ds_o_alu_pc = (take_branch && change_pc) ? alu_pc : {`PC_WIDTH{1'b0}};
 endmodule
 `endif 

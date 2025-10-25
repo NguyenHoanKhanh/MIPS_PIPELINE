@@ -56,12 +56,6 @@ module alucontrol (
         else if (ac_i_opcode == `ORI) begin
             ac_o_control = 5'd3;
         end
-        else if (ac_i_opcode == `BEQ) begin
-            ac_o_control = 5'd15;
-        end
-        else if (ac_i_opcode == `BNE) begin
-            ac_o_control = 5'd16;
-        end
         else if (ac_i_opcode == `LUI) begin
             ac_o_control = 5'd18;
         end

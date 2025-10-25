@@ -8,9 +8,9 @@
 `include "./source/forwarding.v"
 `include "./source/mux3_1.v"
 `include "./source/mux2_1.v"
-`include "./source/mux21.v"
 `include "./source/treat_load.v"
 `include "./source/treat_store.v"
+`include "./source/adder.v"
 
 module datapath (
     d_clk, d_rst, d_i_ce, im_ds_o_pc, write_back_data
@@ -28,8 +28,8 @@ module datapath (
         .pc_clk(d_clk), 
         .pc_rst(d_rst), 
         .pc_i_ce(d_i_ce), 
-        .pc_i_change_pc(es_pc_o_change_pc), 
-        .pc_i_pc(es_pc_o_alu_pc), 
+        .pc_i_change_pc(a_o_change_pc), 
+        .pc_i_pc(a_o_pc), 
         .pc_o_pc(pc_o_pc), 
         .pc_o_ce(pc_o_ce)
     );
@@ -133,14 +133,27 @@ module datapath (
         .ds_o_addr_rt(ds_o_addr_rt),
         .ds_o_addr_rd(ds_o_addr_rd),
         .ds_o_branch(ds_o_branch),
-        // .ds_o_memread(ds_o_memread),
         .ds_o_memwrite(ds_o_memwrite),
         .ds_o_memtoreg(ds_o_memtoreg),
         .ds_o_jal(ds_o_jal),
         .ds_o_jal_addr(ds_o_jal_addr),
         .ds_o_jr(ds_o_jr)
-        // .ds_o_change_pc(ds_o_change_pc),
-        // .ds_o_alu_pc(ds_o_alu_pc)
+    );
+
+    wire [`PC_WIDTH - 1 : 0] a_o_pc;
+    wire a_o_change_pc;
+    adder a (
+        .i_pc(im_ds_o_pc), 
+        .i_imm(ds_o_imm), 
+        .i_branch(ds_o_branch), 
+        .i_opcode(ds_o_opcode), 
+        .i_es_opcode(ds_es_o_opcode), 
+        .i_es_o_pc(es_pc_o_alu_pc), 
+        .i_es_o_change_pc(es_pc_o_change_pc),  
+        .i_data_r1(ds_o_data_rs), 
+        .i_data_r2(ds_o_data_rt), 
+        .o_pc(a_o_pc), 
+        .o_compare(a_o_change_pc)
     );
 
     always @(posedge d_clk or negedge d_rst) begin
@@ -262,7 +275,6 @@ module datapath (
         .es_i_alu_op(ds_es_o_opcode), 
         .es_i_alu_src(ds_es_o_alu_src), 
         .es_i_alu_funct(ds_es_o_funct),
-        .es_i_branch(ds_es_o_branch),
         .es_i_data_rs(mx_es_o_data_rs1), 
         .es_i_data_rt(mx_es_o_data_rs2), 
         .es_i_jal_addr(ds_es_o_jal_addr),

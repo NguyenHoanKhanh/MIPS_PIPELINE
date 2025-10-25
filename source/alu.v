@@ -34,8 +34,6 @@ module alu (
     wire funct_ge   = a_i_funct == 5'd12;
     wire funct_geu  = a_i_funct == 5'd13;
     wire funct_addu = a_i_funct == 5'd14;
-    wire funct_beq  = a_i_funct == 5'd15;
-    wire funct_bne  = a_i_funct == 5'd16;
     wire funct_subu = a_i_funct == 5'd17;
     wire funct_lui  = a_i_funct == 5'd18;
     wire funct_jr = a_i_funct == 5'd19;
@@ -112,35 +110,11 @@ module alu (
                 alu_value = {`DWIDTH{1'b0}};
             end
         end
-        else if (funct_beq) begin
-            if (a_i_data_rs == a_i_data_rt) begin
-                alu_value = a_i_data_rs - a_i_data_rt;
-                alu_pc = a_i_pc + (a_imm << 2); 
-                a_o_change_pc = 1'b1;
-            end
-            else begin
-                alu_value = a_i_data_rs - a_i_data_rt;
-                alu_pc = {`PC_WIDTH{1'b0}}; 
-                a_o_change_pc = 1'b0;
-            end
-        end
-        else if (funct_bne) begin
-            if (a_i_data_rs != a_i_data_rt) begin
-                alu_value = a_i_data_rs - a_i_data_rt;
-                alu_pc = a_i_pc + (a_imm << 2); 
-                a_o_change_pc = 1'b1;
-            end
-            else begin
-                alu_value = a_i_data_rs - a_i_data_rt;
-                alu_pc = {`PC_WIDTH{1'b0}}; 
-                a_o_change_pc = 1'b0;
-            end
-        end
         else if (funct_lui) begin
             alu_value = {a_imm, 16'b0};
         end
         else if (funct_jr) begin
-            alu_pc = a_i_data_rt;
+            alu_pc = a_i_data_rs;
             a_o_change_pc = 1'b1;
         end
         else begin
