@@ -61,9 +61,6 @@ module execute (
         .tj_o_change_pc(temp_jal_change_pc)
     );
 
-    wire temp_zero;
-    assign temp_zero = (alu_value == {`DWIDTH{1'b0}}) ? 1'b1 : 1'b0;
-
     wire take_jr = es_i_jr;
     wire take_jal = es_i_jal;
     assign es_o_change_pc = (take_jal & temp_jal_change_pc) 
