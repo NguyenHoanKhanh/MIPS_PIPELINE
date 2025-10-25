@@ -111,7 +111,7 @@ module alu (
             end
         end
         else if (funct_lui) begin
-            alu_value = {a_imm, 16'b0};
+            alu_value = {a_i_imm, 16'b0};
         end
         else if (funct_jr) begin
             alu_pc = a_i_data_rs;
