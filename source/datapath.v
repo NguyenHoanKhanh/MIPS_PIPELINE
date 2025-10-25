@@ -90,7 +90,6 @@ module datapath (
     reg [`DWIDTH - 1 : 0] ds_mx_o_data_rs, ds_mx_o_data_rt;
     reg ds_es_o_branch;
     reg ds_es_o_memtoreg;
-    // reg ds_es_o_memread; 
     reg ds_es_o_memwrite;
     reg ds_es_o_jal;
     reg [`JUMP_WIDTH - 1 : 0] ds_es_o_jal_addr;
@@ -107,7 +106,6 @@ module datapath (
     wire ds_o_branch;
     wire ds_o_memtoreg;
     wire ds_o_memwrite;
-    // wire ds_o_memread; 
     wire ds_o_jal;
     wire [`JUMP_WIDTH - 1 : 0] ds_o_jal_addr;
     wire ds_o_change_pc;
@@ -165,7 +163,6 @@ module datapath (
             ds_es_o_memwrite <= 1'b0;
             ds_es_o_memtoreg <= 1'b0;
             ds_es_o_branch <= 1'b0;
-            // ds_es_o_memread <= 1'b0;
             ds_es_o_pc <= {`PC_WIDTH{1'b0}};
             ds_es_o_imm <= {`IMM_WIDTH{1'b0}};
             ds_f_o_addr_rs <= {`AWIDTH{1'b0}};
@@ -192,7 +189,6 @@ module datapath (
                 ds_mx_o_data_rt <= ds_o_data_rt;
                 ds_mx_o_data_rs <= ds_o_data_rs;
                 ds_es_o_alu_src <= ds_o_alu_src;
-                // ds_es_o_memread <= ds_o_memread;
                 ds_mx_o_addr_rd <= ds_o_addr_rd;
                 ds_es_o_addr_rt <= ds_o_addr_rt;
                 ds_es_o_memwrite <= ds_o_memwrite;
@@ -208,7 +204,6 @@ module datapath (
                 ds_es_o_memwrite <= 1'b0;
                 ds_es_o_memtoreg <= 1'b0;
                 ds_es_o_branch <= 1'b0;
-                // ds_es_o_memread <= 1'b0;
                 ds_es_o_pc <= {`PC_WIDTH{1'b0}};
                 ds_es_o_imm <= {`IMM_WIDTH{1'b0}};
                 ds_f_o_addr_rs <= {`AWIDTH{1'b0}};
@@ -254,7 +249,6 @@ module datapath (
     reg es_ms_o_memwrite;
     reg es_ms_o_memtoreg;
     reg es_a_o_change_pc;
-    // reg es_ms_o_memread;
     reg [`DWIDTH - 1 : 0] es_ms_alu_value;
     reg [`DWIDTH - 1 : 0] es_ms_o_data_rt;
     reg [`AWIDTH - 1 : 0] es_ms_o_addr_rd;
@@ -301,7 +295,6 @@ module datapath (
             es_ms_o_ce <= 1'b0;
             es_a_o_change_pc <= 1'b0;
             es_ms_o_data_rt <= {`DWIDTH{1'b0}};
-            // es_ms_o_memread <= 1'b0;
             es_ms_o_memwrite <= 1'b0;
             es_ms_o_memtoreg <= 1'b0;
             es_ms_o_addr_rd <= {`AWIDTH{1'b0}};
@@ -319,7 +312,6 @@ module datapath (
             es_ms_o_addr_rd <= mx_es_o_addr_rd;
             es_a_o_change_pc <= es_o_change_pc;
             es_ms_o_memtoreg <= ds_es_o_memtoreg;
-            // es_ms_o_memread <= ds_es_o_memread;
             es_ms_o_memwrite <= ds_es_o_memwrite;
             ts_ms_o_store_mask <= ts_o_store_mask;
         end
@@ -335,7 +327,6 @@ module datapath (
         .m_clk(d_clk), 
         .m_rst(d_rst), 
         .m_wr_en(es_ms_o_memwrite), 
-        // .m_rd_en(es_ms_o_memread),
         .m_i_ce(es_ms_o_ce), 
         .m_i_mask(ts_ms_o_store_mask),
         .alu_value_addr(es_ms_alu_value),
