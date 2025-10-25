@@ -3,11 +3,11 @@
 `include "./source/header.vh"
 `include "./source/treat_jal.v"
 module adder (
-    i_pc, i_imm, i_branch, i_opcode, i_es_opcode, i_es_o_pc, i_es_o_change_pc, 
+    i_pc, i_imm, i_branch, i_opcode, i_es_o_pc, i_es_o_change_pc, 
     i_data_r1, i_data_r2, o_pc, o_compare
 );
     input i_branch;
-    input [`OPCODE_WIDTH - 1 : 0] i_opcode, i_es_opcode;
+    input [`OPCODE_WIDTH - 1 : 0] i_opcode;
     input [`PC_WIDTH - 1 : 0] i_pc;
     input [`PC_WIDTH - 1 : 0] i_es_o_pc;
     input i_es_o_change_pc;

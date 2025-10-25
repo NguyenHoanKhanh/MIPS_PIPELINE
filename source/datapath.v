@@ -147,9 +147,8 @@ module datapath (
         .i_imm(ds_o_imm), 
         .i_branch(ds_o_branch), 
         .i_opcode(ds_o_opcode), 
-        .i_es_opcode(ds_es_o_opcode), 
-        .i_es_o_pc(es_pc_o_alu_pc), 
-        .i_es_o_change_pc(es_pc_o_change_pc),  
+        .i_es_o_pc(es_a_o_alu_pc), 
+        .i_es_o_change_pc(es_a_o_change_pc),  
         .i_data_r1(ds_o_data_rs), 
         .i_data_r2(ds_o_data_rt), 
         .o_pc(a_o_pc), 
@@ -254,12 +253,12 @@ module datapath (
     reg es_ms_o_regwr;
     reg es_ms_o_memwrite;
     reg es_ms_o_memtoreg;
-    reg es_pc_o_change_pc;
+    reg es_a_o_change_pc;
     // reg es_ms_o_memread;
     reg [`DWIDTH - 1 : 0] es_ms_alu_value;
     reg [`DWIDTH - 1 : 0] es_ms_o_data_rt;
     reg [`AWIDTH - 1 : 0] es_ms_o_addr_rd;
-    reg [`PC_WIDTH - 1 : 0] es_pc_o_alu_pc;
+    reg [`PC_WIDTH - 1 : 0] es_a_o_alu_pc;
     reg [`OPCODE_WIDTH - 1 : 0] es_ms_o_opcode;
     wire es_o_ce;
     wire es_o_change_pc;
@@ -298,9 +297,9 @@ module datapath (
     always @(posedge d_clk or negedge d_rst) begin
         if (!d_rst) begin
             es_ms_alu_value <= {`DWIDTH{1'b0}};
-            es_pc_o_alu_pc <= {`PC_WIDTH{1'b0}};
+            es_a_o_alu_pc <= {`PC_WIDTH{1'b0}};
             es_ms_o_ce <= 1'b0;
-            es_pc_o_change_pc <= 1'b0;
+            es_a_o_change_pc <= 1'b0;
             es_ms_o_data_rt <= {`DWIDTH{1'b0}};
             // es_ms_o_memread <= 1'b0;
             es_ms_o_memwrite <= 1'b0;
@@ -313,12 +312,12 @@ module datapath (
         else begin
             es_ms_o_ce <= es_o_ce;
             es_ms_o_opcode <= es_o_opcode;
-            es_pc_o_alu_pc <= es_o_alu_pc;
+            es_a_o_alu_pc <= es_o_alu_pc;
             es_ms_o_regwr <= ds_es_o_reg_wr;
             es_ms_alu_value <= es_o_alu_value;
             es_ms_o_data_rt <= ts_o_store_data;
             es_ms_o_addr_rd <= mx_es_o_addr_rd;
-            es_pc_o_change_pc <= es_o_change_pc;
+            es_a_o_change_pc <= es_o_change_pc;
             es_ms_o_memtoreg <= ds_es_o_memtoreg;
             // es_ms_o_memread <= ds_es_o_memread;
             es_ms_o_memwrite <= ds_es_o_memwrite;

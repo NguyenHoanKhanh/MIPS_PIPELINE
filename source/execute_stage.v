@@ -7,8 +7,7 @@
 
 module execute (
     es_i_ce, es_i_jr, es_i_jal, es_i_jal_addr, es_i_pc, es_i_alu_src, es_i_imm, es_i_alu_op, es_i_alu_funct,
-    es_i_data_rs, es_i_data_rt, es_o_alu_value, es_o_ce, es_o_opcode,
-    es_o_change_pc, es_o_alu_pc
+    es_i_data_rs, es_i_data_rt, es_o_alu_value, es_o_ce, es_o_opcode, es_o_change_pc, es_o_alu_pc
 );  
     input es_i_ce;
     input es_i_jr;
@@ -67,11 +66,9 @@ module execute (
 
     wire take_jr = es_i_jr;
     wire take_jal = es_i_jal;
-    assign es_o_change_pc = 
-                            (take_jal & temp_jal_change_pc) 
+    assign es_o_change_pc = (take_jal & temp_jal_change_pc) 
                             || (take_jr && change_pc);
-    assign es_o_alu_pc = 
-                        (take_jr && change_pc) ? alu_pc 
+    assign es_o_alu_pc = (take_jr && change_pc) ? alu_pc 
                         : (take_jal && temp_jal_change_pc) ? temp_pc : {`PC_WIDTH{1'b0}};
     
     wire [`DWIDTH - 1 : 0] temp_alu_value;

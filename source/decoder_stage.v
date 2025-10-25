@@ -9,30 +9,28 @@ module decoder_stage (
     ds_o_alu_src, ds_o_addr_rs, ds_o_addr_rt, ds_o_addr_rd, ds_o_reg_wr, ds_o_memtoreg,
     ds_o_jal, ds_o_jal_addr, ds_o_branch, ds_o_jr, ds_o_alu_value
 );
-    input ds_clk, ds_rst;
     input ds_i_ce;
-    input [`DWIDTH - 1 : 0] ds_i_data_rd;
-    input [`AWIDTH - 1 : 0] ds_i_addr_rd;
     input ds_i_reg_wr;
+    input ds_clk, ds_rst;
     input [`IWIDTH - 1 : 0] ds_i_instr;
-    output [`OPCODE_WIDTH - 1 : 0] ds_o_opcode;
-    output [`FUNCT_WIDTH - 1 : 0] ds_o_funct;
-    output [`DWIDTH - 1 : 0] ds_o_data_rs, ds_o_data_rt;
-    output [`AWIDTH - 1 : 0] ds_o_addr_rs, ds_o_addr_rt;
-    output [`IMM_WIDTH - 1 : 0] ds_o_imm;
-    output [`AWIDTH - 1 : 0] ds_o_addr_rd;
+    input [`AWIDTH - 1 : 0] ds_i_addr_rd;
+    input [`DWIDTH - 1 : 0] ds_i_data_rd;
     output ds_o_ce;
-    output ds_o_alu_src;
+    output ds_o_jr;
+    output ds_o_jal;
     output ds_o_reg_wr;
     output ds_o_branch;
-    // output ds_o_memread; 
+    output ds_o_alu_src;
     output ds_o_memwrite;
     output ds_o_memtoreg;
-    output ds_o_jal;
-    output [`JUMP_WIDTH - 1 : 0] ds_o_jal_addr;
+    output [`IMM_WIDTH - 1 : 0] ds_o_imm;
+    output [`AWIDTH - 1 : 0] ds_o_addr_rd;
     output [`DWIDTH - 1 : 0] ds_o_alu_value;
-    output ds_o_jr;
-    // wire d_r_o_reg_dst;
+    output [`FUNCT_WIDTH - 1 : 0] ds_o_funct;
+    output [`OPCODE_WIDTH - 1 : 0] ds_o_opcode;
+    output [`JUMP_WIDTH - 1 : 0] ds_o_jal_addr;
+    output [`DWIDTH - 1 : 0] ds_o_data_rs, ds_o_data_rt;
+    output [`AWIDTH - 1 : 0] ds_o_addr_rs, ds_o_addr_rt;
     
     decoder d (
         .d_i_ce(ds_i_ce), 
@@ -44,20 +42,15 @@ module decoder_stage (
         .d_o_addr_rd(ds_o_addr_rd), 
         .d_o_imm(ds_o_imm),
         .d_o_ce(ds_o_ce),
-        // .d_o_reg_dst(d_r_o_reg_dst),
         .d_o_branch(ds_o_branch),
         .d_o_alu_src(ds_o_alu_src),
         .d_o_reg_wr(ds_o_reg_wr),
-        // .d_o_memread(ds_o_memread),
         .d_o_memwrite(ds_o_memwrite),
         .d_o_memtoreg(ds_o_memtoreg),
         .d_o_jal(ds_o_jal),
         .d_o_jal_addr(ds_o_jal_addr),
         .d_o_jr(ds_o_jr)
     );
-
-    // wire [`AWIDTH - 1 : 0] write_register;
-    // assign write_register = (d_r_o_reg_dst) ? ds_o_addr_rd : ds_o_addr_rt;
 
     register r (
         .r_clk(ds_clk), 
