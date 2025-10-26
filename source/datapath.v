@@ -184,7 +184,6 @@ module datapath (
                 ds_es_o_funct <= ds_o_funct;
                 ds_es_o_reg_wr <= ds_o_reg_wr;
                 ds_es_o_opcode <= ds_o_opcode;
-                ds_es_o_branch <= ds_o_branch;
                 ds_f_o_addr_rs <= ds_o_addr_rs;
                 ds_mx_o_data_rt <= ds_o_data_rt;
                 ds_mx_o_data_rs <= ds_o_data_rs;
