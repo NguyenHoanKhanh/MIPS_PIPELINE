@@ -143,7 +143,7 @@ module datapath (
 
     wire [`PC_WIDTH - 1 : 0] a_o_pc;
     wire a_o_change_pc;
-    adder a (
+    control_hazard a (
         .i_pc(im_ds_o_pc), 
         .i_imm(ds_o_imm), 
         .i_branch(ds_o_branch), 
