@@ -7,7 +7,7 @@ module decoder_stage (
     ds_clk, ds_rst, ds_i_ce, ds_i_data_rd, ds_i_addr_rd, ds_i_instr, ds_i_reg_wr,
     ds_o_opcode, ds_o_funct, ds_o_data_rs, ds_o_data_rt, ds_o_imm, ds_o_ce, ds_o_memwrite,
     ds_o_alu_src, ds_o_addr_rs, ds_o_addr_rt, ds_o_addr_rd, ds_o_reg_wr, ds_o_memtoreg,
-    ds_o_jal, ds_o_jal_addr, ds_o_branch, ds_o_jr, ds_o_alu_value
+    ds_o_jal, ds_o_jal_addr, ds_o_branch, ds_o_jr, ds_o_alu_value, ds_o_reg_dst
 );
     input ds_i_ce;
     input ds_i_reg_wr;
@@ -21,6 +21,7 @@ module decoder_stage (
     output ds_o_reg_wr;
     output ds_o_branch;
     output ds_o_alu_src;
+    output ds_o_reg_dst;
     output ds_o_memwrite;
     output ds_o_memtoreg;
     output [`IMM_WIDTH - 1 : 0] ds_o_imm;
@@ -49,7 +50,8 @@ module decoder_stage (
         .d_o_memtoreg(ds_o_memtoreg),
         .d_o_jal(ds_o_jal),
         .d_o_jal_addr(ds_o_jal_addr),
-        .d_o_jr(ds_o_jr)
+        .d_o_jr(ds_o_jr),
+        .d_o_reg_dst(ds_o_reg_dst)
     );
 
     register r (

@@ -12,7 +12,7 @@ module imem (
     
     reg [`IWIDTH - 1 : 0] mem_instr [`DEPTH - 1 : 0];
 
-    always @(posedge im_clk, negedge im_rst) begin
+    always @(negedge im_clk, negedge im_rst) begin
         if (!im_rst) begin
             $readmemh("./source/instr.txt", mem_instr, 0, `DEPTH - 1);
             im_o_ce <= 1'b0;

@@ -3,17 +3,12 @@
 `include "./source/header.vh"
 
 module mux2_1 (
-    a, b, opcode, out
+    a, b, regdst, out
 );
     input [`AWIDTH - 1 : 0] a, b;
-    input [`OPCODE_WIDTH - 1 : 0] opcode;
+    input regdst;
     output [`AWIDTH - 1 : 0] out;
 
-    wire op_itype = (opcode == `LOAD || opcode == `ADDI || opcode == `ADDIU || 
-                    opcode == `SLTI || opcode == `SLTIU || opcode == `ANDI ||
-                    opcode == `ORI);
-    wire op_rtype = (opcode == `RTYPE);
-
-    assign out = (op_itype) ? a : (op_rtype) ? b : {`AWIDTH{1'b0}};
+    assign out = (!regdst) ? a : b;
 endmodule
 `endif 

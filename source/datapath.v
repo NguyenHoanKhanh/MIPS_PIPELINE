@@ -94,6 +94,7 @@ module datapath (
     reg ds_es_o_jal;
     reg [`JUMP_WIDTH - 1 : 0] ds_es_o_jal_addr;
     reg ds_es_o_jr;
+    reg ds_mx_o_reg_dst;
     wire ds_o_ce;
     wire ds_o_reg_wr;
     wire ds_o_alu_src;
@@ -111,6 +112,7 @@ module datapath (
     wire ds_o_change_pc;
     wire [`PC_WIDTH - 1 : 0] ds_o_alu_pc;
     wire ds_o_jr;
+    wire ds_o_reg_dst;
     decoder_stage ds (
         .ds_clk(d_clk), 
         .ds_rst(d_rst), 
@@ -135,7 +137,8 @@ module datapath (
         .ds_o_memtoreg(ds_o_memtoreg),
         .ds_o_jal(ds_o_jal),
         .ds_o_jal_addr(ds_o_jal_addr),
-        .ds_o_jr(ds_o_jr)
+        .ds_o_jr(ds_o_jr),
+        .ds_o_reg_dst(ds_o_reg_dst)
     );
 
     wire [`PC_WIDTH - 1 : 0] a_o_pc;
@@ -173,6 +176,7 @@ module datapath (
             ds_es_o_funct <= {`FUNCT_WIDTH{1'b0}};
             ds_es_o_opcode <= {`OPCODE_WIDTH{1'b0}};
             ds_es_o_jal_addr <= {`JUMP_WIDTH{1'b0}};
+            ds_mx_o_reg_dst <= 1'b0;
         end
         else begin
             if (!f_o_stall) begin
@@ -190,6 +194,7 @@ module datapath (
                 ds_es_o_alu_src <= ds_o_alu_src;
                 ds_mx_o_addr_rd <= ds_o_addr_rd;
                 ds_es_o_addr_rt <= ds_o_addr_rt;
+                ds_mx_o_reg_dst <= ds_o_reg_dst;
                 ds_es_o_memwrite <= ds_o_memwrite;
                 ds_es_o_memtoreg <= ds_o_memtoreg;
                 ds_es_o_jal_addr <= ds_o_jal_addr;
@@ -198,11 +203,12 @@ module datapath (
                 ds_es_o_ce <= 1'b0;
                 ds_es_o_jr <= 1'b0;
                 ds_es_o_jal <= 1'b0;
+                ds_es_o_branch <= 1'b0;
                 ds_es_o_reg_wr <= 1'b0;
                 ds_es_o_alu_src <= 1'b0;
+                ds_mx_o_reg_dst <= 1'b0;
                 ds_es_o_memwrite <= 1'b0;
                 ds_es_o_memtoreg <= 1'b0;
-                ds_es_o_branch <= 1'b0;
                 ds_es_o_pc <= {`PC_WIDTH{1'b0}};
                 ds_es_o_imm <= {`IMM_WIDTH{1'b0}};
                 ds_f_o_addr_rs <= {`AWIDTH{1'b0}};
@@ -239,7 +245,7 @@ module datapath (
     mux2_1 m3 (
         .a(ds_es_o_addr_rt), 
         .b(ds_mx_o_addr_rd), 
-        .opcode(ds_es_o_opcode), 
+        .regdst(ds_mx_o_reg_dst),
         .out(mx_es_o_addr_rd)
     );
 

@@ -4,7 +4,7 @@
 module decoder (
     d_i_ce, d_i_instr, d_o_opcode, d_o_funct, d_o_addr_rs, d_o_addr_rt,
     d_o_addr_rd, d_o_imm, d_o_ce, d_o_alu_src, d_o_reg_wr, d_o_memwrite, 
-    d_o_memtoreg, d_o_jal, d_o_jal_addr, d_o_jr, d_o_branch
+    d_o_memtoreg, d_o_jal, d_o_jal_addr, d_o_jr, d_o_branch, d_o_reg_dst
 );
     input d_i_ce;
     input [`IWIDTH - 1 : 0] d_i_instr;
@@ -13,6 +13,7 @@ module decoder (
     output reg d_o_jal;
     output reg d_o_reg_wr;
     output reg d_o_alu_src;
+    output reg d_o_reg_dst;
     output reg d_o_branch;
     output reg d_o_memtoreg;
     output reg d_o_memwrite;
@@ -61,6 +62,7 @@ module decoder (
         d_o_reg_wr = 1'b0;
         d_o_branch = 1'b0;
         d_o_alu_src = 1'b0;
+        d_o_reg_dst = 1'b0;
         d_o_memwrite = 1'b0;
         d_o_memtoreg = 1'b0;
         d_o_imm = {`IMM_WIDTH{1'b0}};
@@ -79,6 +81,7 @@ module decoder (
                     d_o_branch = 1'b0;
                     d_o_reg_wr = 1'b0;
                     d_o_alu_src = 1'b0;
+                    d_o_reg_dst = 1'b0;
                     d_o_memtoreg = 1'b0;
                     d_o_memwrite = 1'b0;
                     d_o_addr_rs = 5'd31;
@@ -99,6 +102,7 @@ module decoder (
                     d_o_addr_rt = rt;
                     d_o_addr_rd = rd;
                     d_o_funct = funct;
+                    d_o_reg_dst = 1'b1;
                     d_o_alu_src = 1'b0;
                     d_o_memtoreg = 1'b0;
                     d_o_memwrite = 1'b0;
@@ -116,6 +120,7 @@ module decoder (
                 d_o_addr_rt = rt;
                 d_o_reg_wr = 1'b1;
                 d_o_branch = 1'b0;
+                d_o_reg_dst = 1'b0;
                 d_o_alu_src = 1'b1;
                 d_o_memtoreg = 1'b0;
                 d_o_memwrite = 1'b0;
@@ -132,13 +137,14 @@ module decoder (
                 d_o_funct = {`FUNCT_WIDTH{1'b0}};
                 d_o_imm = imm;
                 d_o_ce = 1'b1;
-                d_o_branch = 1'b1;
-                d_o_memtoreg = 1'b0;
-                d_o_memwrite = 1'b0;
-                d_o_alu_src = 1'b0;
-                d_o_reg_wr = 1'b0;
                 d_o_jr = 1'b0;
                 d_o_jal = 1'b0;
+                d_o_reg_wr = 1'b0;
+                d_o_branch = 1'b1;
+                d_o_alu_src = 1'b0;
+                d_o_reg_dst = 1'b0;
+                d_o_memtoreg = 1'b0;
+                d_o_memwrite = 1'b0;
                 d_o_jal_addr = {`JUMP_WIDTH{1'b0}};
             end
             else if (op_load || op_store) begin
@@ -154,11 +160,13 @@ module decoder (
                 d_o_jal_addr = {`JUMP_WIDTH{1'b0}};
                 d_o_branch = 1'b0;
                 if (op_load) begin
+                    d_o_reg_dst = 1'b0;
                     d_o_alu_src = 1'b1;
                     d_o_reg_wr = 1'b1;
                     d_o_memtoreg = 1'b1;
                 end
                 else if (op_store) begin
+                    d_o_reg_dst = 1'b0;
                     d_o_alu_src = 1'b1;
                     d_o_memwrite = 1'b1;
                 end
@@ -171,13 +179,14 @@ module decoder (
                 d_o_funct = {`FUNCT_WIDTH{1'b0}};
                 d_o_imm = {`IMM_WIDTH{1'b0}};
                 d_o_ce = 1'b1;
+                d_o_jr = 1'b0;
+                d_o_jal = 1'b1;
                 d_o_reg_wr = 1'b1;
                 d_o_branch = 1'b0;
+                d_o_reg_dst = 1'b1;
                 d_o_alu_src = 1'b0;
                 d_o_memwrite = 1'b0;
                 d_o_memtoreg = 1'b0;
-                d_o_jr = 1'b0;
-                d_o_jal = 1'b1;
                 d_o_jal_addr = temp_jal;
             end
             else begin
@@ -195,6 +204,7 @@ module decoder (
                 d_o_jr = 1'b0;
                 d_o_jal = 1'b0;
                 d_o_jal_addr = {`JUMP_WIDTH{1'b0}};
+                d_o_reg_dst = 1'b0;
             end
         end
         else begin
@@ -213,6 +223,7 @@ module decoder (
             d_o_jr = 1'b0;
             d_o_jal = 1'b0;
             d_o_jal_addr = {`JUMP_WIDTH{1'b0}};
+            d_o_reg_dst = 1'b0;
         end
     end
 endmodule
