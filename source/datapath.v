@@ -10,7 +10,7 @@
 `include "./source/mux2_1.v"
 `include "./source/treat_load.v"
 `include "./source/treat_store.v"
-`include "./source/adder.v"
+`include "./source/control_hazard.v"
 
 module datapath (
     d_clk, d_rst, d_i_ce, im_ds_o_pc, write_back_data
