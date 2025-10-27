@@ -33,11 +33,6 @@ module alucontrol (
                 default: ac_o_control = 5'd0;
             endcase
         end
-        else if (ac_i_opcode == `LOAD || ac_i_opcode == `LOAD_BYTE || ac_i_opcode == `LOAD_HALF || 
-                ac_i_opcode == `LOAD_BYTE_UNSIGNED || ac_i_opcode == `LOAD_HALF_UNSIGNED || 
-                ac_i_opcode == `STORE || ac_i_opcode == `STORE_BYTE || ac_i_opcode == `STORE_HALF) begin
-            ac_o_control = 5'd0;
-        end
         else if (ac_i_opcode == `ADDI) begin
             ac_o_control = 5'd0;
         end
@@ -58,6 +53,11 @@ module alucontrol (
         end
         else if (ac_i_opcode == `LUI) begin
             ac_o_control = 5'd18;
+        end
+        else if (ac_i_opcode == `LOAD_WORD || ac_i_opcode == `LOAD_BYTE || ac_i_opcode == `LOAD_HALF || 
+                ac_i_opcode == `LOAD_BYTE_UNSIGNED || ac_i_opcode == `LOAD_HALF_UNSIGNED || 
+                ac_i_opcode == `STORE_WORD || ac_i_opcode == `STORE_BYTE || ac_i_opcode == `STORE_HALF) begin
+            ac_o_control = 5'd0;
         end
     end
 endmodule

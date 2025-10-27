@@ -5,16 +5,16 @@ module forwarding (
     ds_es_i_opcode, ds_es_i_addr_rs1, ds_es_i_addr_rs2, es_ms_i_addr_rd, es_ms_i_regwrite, 
     ms_wb_i_regwrite, ms_wb_i_addr_rd, f_o_control_rs1, f_o_control_rs2, f_o_stall
 );
+    input es_ms_i_regwrite;
+    input ms_wb_i_regwrite;
+    input [`AWIDTH - 1 : 0] es_ms_i_addr_rd;
+    input [`AWIDTH - 1 : 0] ms_wb_i_addr_rd;
     input [`OPCODE_WIDTH - 1 : 0] ds_es_i_opcode;
     input [`AWIDTH - 1 : 0] ds_es_i_addr_rs1, ds_es_i_addr_rs2;
-    input [`AWIDTH - 1 : 0] es_ms_i_addr_rd;
-    input es_ms_i_regwrite;
-    input [`AWIDTH - 1 : 0] ms_wb_i_addr_rd;
-    input ms_wb_i_regwrite;
-    output reg [1 : 0] f_o_control_rs1, f_o_control_rs2;
     output reg f_o_stall;
+    output reg [1 : 0] f_o_control_rs1, f_o_control_rs2;
 
-    wire ds_es_op_load = ds_es_i_opcode == `LOAD;
+    wire ds_es_op_load = ds_es_i_opcode == `LOAD_WORD;
     always @(*) begin
         f_o_stall = 1'b0;
         if (((ds_es_i_addr_rs1 == es_ms_i_addr_rd) || (ds_es_i_addr_rs2 == es_ms_i_addr_rd)) && ds_es_op_load) begin

@@ -4,11 +4,11 @@
 module imem (
     im_clk, im_rst, im_i_ce, im_i_address, im_o_instr, im_o_ce
 );
-    input im_clk, im_rst;
     input im_i_ce;
+    input im_clk, im_rst;
     input [`PC_WIDTH - 1 : 0] im_i_address;
-    output reg [`IWIDTH - 1 : 0] im_o_instr;
     output reg im_o_ce;
+    output reg [`IWIDTH - 1 : 0] im_o_instr;
     
     reg [`IWIDTH - 1 : 0] mem_instr [`DEPTH - 1 : 0];
 
@@ -20,8 +20,8 @@ module imem (
         end
         else begin
             if (im_i_ce) begin
-                im_o_instr <= mem_instr[im_i_address[`PC_WIDTH - 1 : 2]];
                 im_o_ce <= 1'b1;
+                im_o_instr <= mem_instr[im_i_address[`PC_WIDTH - 1 : 2]];
             end
             else begin
                 im_o_ce <= 1'b0;

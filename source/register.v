@@ -4,8 +4,8 @@
 module register (
     r_clk, r_rst, r_wr_en, r_data_in, r_addr_in, r_data_out1, r_data_out2, r_addr_out1, r_addr_out2 
 );
-    input r_clk, r_rst;
     input r_wr_en;
+    input r_clk, r_rst;
     input [`DWIDTH - 1 : 0] r_data_in;
     input [`AWIDTH - 1 : 0] r_addr_in;
     input [`AWIDTH - 1 : 0] r_addr_out1, r_addr_out2;

@@ -7,14 +7,14 @@ module control_hazard (
     i_data_r1, i_data_r2, o_pc, o_compare
 );
     input i_branch;
-    input [`OPCODE_WIDTH - 1 : 0] i_opcode;
-    input [`PC_WIDTH - 1 : 0] i_pc;
-    input [`PC_WIDTH - 1 : 0] i_es_o_pc;
     input i_es_o_change_pc;
+    input [`PC_WIDTH - 1 : 0] i_pc;
     input [`IMM_WIDTH - 1 : 0] i_imm;
+    input [`PC_WIDTH - 1 : 0] i_es_o_pc;
+    input [`OPCODE_WIDTH - 1 : 0] i_opcode;
     input [`DWIDTH - 1 : 0] i_data_r1, i_data_r2;
-    output reg [`PC_WIDTH - 1 : 0] o_pc;
     output reg o_compare;
+    output reg [`PC_WIDTH - 1 : 0] o_pc;
     wire [`DWIDTH - 1 : 0] o_imm = {{(`DWIDTH - `IMM_WIDTH){i_imm[`IMM_WIDTH - 1]}}, i_imm};    
 
     always @(*) begin

@@ -5,8 +5,8 @@
 module mux2_1 (
     a, b, regdst, out
 );
-    input [`AWIDTH - 1 : 0] a, b;
     input regdst;
+    input [`AWIDTH - 1 : 0] a, b;
     output [`AWIDTH - 1 : 0] out;
 
     assign out = (!regdst) ? a : b;

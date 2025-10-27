@@ -5,16 +5,16 @@
 module treatstore (
     ts_i_opcode, ts_i_store_data, ts_o_store_data, ts_o_store_mask
 );
-    input [`OPCODE_WIDTH - 1 : 0] ts_i_opcode;
     input [`DWIDTH - 1 : 0] ts_i_store_data;
-    output reg [`DWIDTH - 1 : 0] ts_o_store_data;
+    input [`OPCODE_WIDTH - 1 : 0] ts_i_opcode;
     output reg [3 : 0] ts_o_store_mask;
+    output reg [`DWIDTH - 1 : 0] ts_o_store_data;
 
     always @(*) begin
-        ts_o_store_data = {`DWIDTH{1'b0}};
         ts_o_store_mask = {4{1'b0}};
+        ts_o_store_data = {`DWIDTH{1'b0}};
         case (ts_i_opcode)
-            `STORE : begin
+            `STORE_WORD : begin
                 ts_o_store_mask = 4'b1111;
                 ts_o_store_data = ts_i_store_data;
             end

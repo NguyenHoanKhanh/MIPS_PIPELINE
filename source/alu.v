@@ -5,15 +5,15 @@ module alu (
     a_i_data_rs, a_i_data_rt, a_i_imm, a_i_funct, a_i_alu_src, a_i_pc, 
     alu_value, alu_pc, a_o_change_pc
 );
-    input [`DWIDTH - 1 : 0] a_i_data_rs;
-    input [`DWIDTH - 1 : 0] a_i_data_rt;
-    input [`IMM_WIDTH - 1 : 0] a_i_imm;
-    input [`PC_WIDTH - 1 : 0] a_i_pc;
     input a_i_alu_src;
     input [4 : 0] a_i_funct;
-    output reg [`DWIDTH - 1 : 0] alu_value;
-    output reg [`PC_WIDTH - 1 : 0] alu_pc;
+    input [`PC_WIDTH - 1 : 0] a_i_pc;
+    input [`IMM_WIDTH - 1 : 0] a_i_imm;
+    input [`DWIDTH - 1 : 0] a_i_data_rs;
+    input [`DWIDTH - 1 : 0] a_i_data_rt;
     output reg a_o_change_pc;
+    output reg [`PC_WIDTH - 1 : 0] alu_pc;
+    output reg [`DWIDTH - 1 : 0] alu_value;
     // sign-extend immediate (parameterized)
     wire [`DWIDTH - 1 : 0] a_imm = {{(`DWIDTH - `IMM_WIDTH){a_i_imm[`IMM_WIDTH - 1]}}, a_i_imm};
     wire [`DWIDTH - 1 : 0] a_o_data_2 = (a_i_alu_src) ? a_imm : a_i_data_rt;
