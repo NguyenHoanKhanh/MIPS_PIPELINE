@@ -1,7 +1,6 @@
 `ifndef CONTROL_HAZARD_V
 `define CONTROL_HAZARD_V
 `include "./source/header.vh"
-`include "./source/treat_jal.v"
 module control_hazard (
     i_pc, i_imm, i_branch, i_opcode, i_es_o_pc, i_es_o_change_pc, 
     i_data_r1, i_data_r2, o_pc, o_compare

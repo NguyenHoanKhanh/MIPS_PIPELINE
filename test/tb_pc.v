@@ -45,7 +45,7 @@ module tb;
         // pc_i_pc = 10;
         // @(posedge pc_clk);
         // pc_i_change_pc = 1'b0;
-        #200; $finish;
+        #20; $finish;
     end
 
     initial begin

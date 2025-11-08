@@ -1,4 +1,4 @@
-`include "./source/adder.v"
+`include "./source/control_hazard.v"
 
 module tb;
     reg [`PC_WIDTH - 1 : 0] i_pc;
@@ -9,7 +9,7 @@ module tb;
     wire [`PC_WIDTH - 1 : 0] o_pc;
     wire o_compare;
 
-    adder a (
+    control_hazard a (
         .i_pc(i_pc), 
         .i_imm(i_imm), 
         .i_branch(i_branch), 
