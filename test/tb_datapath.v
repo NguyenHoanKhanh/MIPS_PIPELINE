@@ -41,7 +41,7 @@ module tb;
     end
 
     initial begin  
-        $monitor("%0t: PC = %0d, instr = %h, alu_out = %h", 
+        $monitor("%0t: PC = %0d, instr = %h, alu_out = %d", 
             $time, im_ds_o_pc, d.im_ds_o_instr, write_back_data);
     end
 endmodule
